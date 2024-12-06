@@ -1,0 +1,14 @@
+C:\Users\Instruktor\C#\stilltestingcsharp\bin\Debug\net8.0\stilltestingcsharp.exe
+C:\Users\Instruktor\C#\stilltestingcsharp\bin\Debug\net8.0\stilltestingcsharp.deps.json
+C:\Users\Instruktor\C#\stilltestingcsharp\bin\Debug\net8.0\stilltestingcsharp.runtimeconfig.json
+C:\Users\Instruktor\C#\stilltestingcsharp\bin\Debug\net8.0\stilltestingcsharp.dll
+C:\Users\Instruktor\C#\stilltestingcsharp\bin\Debug\net8.0\stilltestingcsharp.pdb
+C:\Users\Instruktor\C#\stilltestingcsharp\obj\Debug\net8.0\stilltestingcsharp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Instruktor\C#\stilltestingcsharp\obj\Debug\net8.0\stilltestingcsharp.AssemblyInfoInputs.cache
+C:\Users\Instruktor\C#\stilltestingcsharp\obj\Debug\net8.0\stilltestingcsharp.AssemblyInfo.cs
+C:\Users\Instruktor\C#\stilltestingcsharp\obj\Debug\net8.0\stilltestingcsharp.csproj.CoreCompileInputs.cache
+C:\Users\Instruktor\C#\stilltestingcsharp\obj\Debug\net8.0\stilltestingcsharp.dll
+C:\Users\Instruktor\C#\stilltestingcsharp\obj\Debug\net8.0\refint\stilltestingcsharp.dll
+C:\Users\Instruktor\C#\stilltestingcsharp\obj\Debug\net8.0\stilltestingcsharp.pdb
+C:\Users\Instruktor\C#\stilltestingcsharp\obj\Debug\net8.0\stilltestingcsharp.genruntimeconfig.cache
+C:\Users\Instruktor\C#\stilltestingcsharp\obj\Debug\net8.0\ref\stilltestingcsharp.dll

@@ -1,0 +1,14 @@
+C:\Users\Instruktor\C#\secondProject\bin\Debug\net8.0\secondProject.exe
+C:\Users\Instruktor\C#\secondProject\bin\Debug\net8.0\secondProject.deps.json
+C:\Users\Instruktor\C#\secondProject\bin\Debug\net8.0\secondProject.runtimeconfig.json
+C:\Users\Instruktor\C#\secondProject\bin\Debug\net8.0\secondProject.dll
+C:\Users\Instruktor\C#\secondProject\bin\Debug\net8.0\secondProject.pdb
+C:\Users\Instruktor\C#\secondProject\obj\Debug\net8.0\secondProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Instruktor\C#\secondProject\obj\Debug\net8.0\secondProject.AssemblyInfoInputs.cache
+C:\Users\Instruktor\C#\secondProject\obj\Debug\net8.0\secondProject.AssemblyInfo.cs
+C:\Users\Instruktor\C#\secondProject\obj\Debug\net8.0\secondProject.csproj.CoreCompileInputs.cache
+C:\Users\Instruktor\C#\secondProject\obj\Debug\net8.0\secondProject.dll
+C:\Users\Instruktor\C#\secondProject\obj\Debug\net8.0\refint\secondProject.dll
+C:\Users\Instruktor\C#\secondProject\obj\Debug\net8.0\secondProject.pdb
+C:\Users\Instruktor\C#\secondProject\obj\Debug\net8.0\secondProject.genruntimeconfig.cache
+C:\Users\Instruktor\C#\secondProject\obj\Debug\net8.0\ref\secondProject.dll

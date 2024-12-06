@@ -1,0 +1,9 @@
+# Ignore build artifacts
+**/bin/
+**/obj/
+
+# Ignore temp folder in coding folder
+coding/temp/
+
+# Ignore all .log files
+**/*.log
