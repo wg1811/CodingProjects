@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stilltestingcsharp", "still
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "arrayLearning", "arrayLearning\arrayLearning.csproj", "{C8A5213F-DA42-429E-837E-9D2C94CB57CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "palendromeChecker", "palendromeChecker\palendromeChecker.csproj", "{BB1995E3-0263-4BB0-A1F1-D0765E23EF3F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "palindromeChecker", "palindromeChecker\palindromeChecker.csproj", "{19F5F309-88E8-4141-AA54-7EA24D54D18B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bmiCalculator", "bmiCalculator\bmiCalculator.csproj", "{C663401B-60B0-4602-AFC1-89B4B2EA4E87}"
@@ -16,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "circleCalc", "circleCalc\circleCalc.csproj", "{11367288-C8E5-4EB0-820C-19672D3E7439}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "methodPractice", "methodPractice\methodPractice.csproj", "{0D658351-46E6-487F-BDED-05261CD76113}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "learningClasses", "learningClasses\learningClasses.csproj", "{BDA4C7EA-E249-4A50-97F8-947771F963ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,5 +54,9 @@ Global
 		{0D658351-46E6-487F-BDED-05261CD76113}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D658351-46E6-487F-BDED-05261CD76113}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D658351-46E6-487F-BDED-05261CD76113}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDA4C7EA-E249-4A50-97F8-947771F963ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDA4C7EA-E249-4A50-97F8-947771F963ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDA4C7EA-E249-4A50-97F8-947771F963ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDA4C7EA-E249-4A50-97F8-947771F963ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
