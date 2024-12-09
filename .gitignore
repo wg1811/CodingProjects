@@ -1,9 +1,18 @@
 # Ignore build artifacts
-**/bin/
-**/obj/
+# Build directories
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# IDE-specific files
+.vscode/
+.idea/
 
 # Ignore temp folder in coding folder
-coding/temp/
-
-# Ignore all .log files
-**/*.log
+temp/
