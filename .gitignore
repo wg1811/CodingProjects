@@ -16,3 +16,9 @@ obj/
 
 # Ignore temp folder in coding folder
 temp/
+
+# Ignore package-lock.json files
+**/package-lock.json
+
+# Ignore all contents of node_modules directories
+**/node_modules/
