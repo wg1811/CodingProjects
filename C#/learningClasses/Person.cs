@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+
 namespace learningClasses
 {
     class Person
@@ -67,6 +69,58 @@ namespace learningClasses
             ";
             }
             Console.WriteLine(carInfo);
+        }
+    }
+
+    class Student
+    {
+        //properties
+        public string Name {get; set;} = "";
+        public int Age {get; set;} = 0;
+
+        //constructor
+        public Student()
+        {
+
+        }
+
+        public void DisplayStudent()
+        {
+            string name = this.Name;
+            int age = this.Age;
+
+            Console.WriteLine($"-----------------------------\n\n{name} is {age} years old.\n\n-----------------------------");
+        }
+    } //end of Student class
+
+    class Classroom
+    {
+        //properties
+        public List<Student>? StudentList {get; set;}
+        public string Name {get; set;} = "";
+
+        public string Semester {get;set;} = "";
+
+        //constructor
+        public Classroom()
+        {
+
+        }
+
+        public void DisplayStudents() {
+            foreach (Student student in StudentList) {
+                Console.WriteLine(student.Name + " is " + student.Age);
+            }
+        }
+
+        public void DisplayClassInfo() {
+            string name = this.Name;
+            string semester = this.Semester;
+            List<Student>? studentList = this.StudentList;
+
+            Console.WriteLine($"-----------------------------\n\n{name} takes place in {semester}.\n Student List: ");
+            DisplayStudents();
+            Console.WriteLine("\n\n-----------------------------");
         }
     }
 }
