@@ -96,7 +96,7 @@ namespace learningClasses
     class Classroom
     {
         //properties
-        public List<Student>? StudentList {get; set;}
+        public List<Student>? StudentList {get; set;} = [];
         public string Name {get; set;} = "";
 
         public string Semester {get;set;} = "";
