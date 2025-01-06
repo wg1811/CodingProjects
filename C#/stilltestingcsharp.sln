@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "methodPractice", "methodPra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "learningClasses", "learningClasses\learningClasses.csproj", "{BDA4C7EA-E249-4A50-97F8-947771F963ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "..\ASP_Basics\WebApplication1\WebApplication1.csproj", "{4C007894-6FD3-4E65-A9A8-455374884E92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,9 @@ Global
 		{BDA4C7EA-E249-4A50-97F8-947771F963ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDA4C7EA-E249-4A50-97F8-947771F963ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDA4C7EA-E249-4A50-97F8-947771F963ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C007894-6FD3-4E65-A9A8-455374884E92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C007894-6FD3-4E65-A9A8-455374884E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C007894-6FD3-4E65-A9A8-455374884E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C007894-6FD3-4E65-A9A8-455374884E92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
