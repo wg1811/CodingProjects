@@ -1,4 +1,6 @@
-﻿namespace Oppgaver_uke_1;
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace Oppgaver_uke_1;
 
 class Program
 {
@@ -33,7 +35,33 @@ class Program
         Console.WriteLine(word);
     }
     
+    //Extra tasks 
+    Dictionary<int, string> myDictionary = new Dictionary<int, string>();
+    myDictionary.Add(1, "First");
+    myDictionary.Add(2, "Second");
+    myDictionary.Add(3, "Third");
+    myDictionary.Add(4, "Fourth");
+
+    foreach (KeyValuePair<int, string> item in myDictionary)
+    {
+        Console.WriteLine($"The key is {item.Key} and the value is {item.Value}.");
     }
 
-    
+    Console.WriteLine(myIntAdder(45,55));
+
+    myGreeter("Devrim");
+
+    }
+
+    static public int myIntAdder(int a, int b)
+    {
+        return a + b;
+    }
+
+    static public string myGreeter(string personToGreet)
+    {
+        string greeting = $"Hi {personToGreet}!  I hope you're doing well.";        
+        Console.WriteLine(greeting);
+        return greeting;
+    }
 }
