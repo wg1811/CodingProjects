@@ -89,16 +89,16 @@ app.MapPost("/findallchar", ([FromForm] char anyChar, [FromForm] string anyStrin
 }).DisableAntiforgery();
 
 
-app.MapPost("/createsubstring", ([FromForm] char anyChar, [FromForm] int position, [FromForm] string anyString) =>
+app.MapPost("/createsubstring", ([FromForm] char anyChar, [FromForm] int length, [FromForm] string anyString) =>
 {
     int charPos = anyString.IndexOf(anyChar); //we get the first char in the text
-    string searchText = anyString.Substring(charPos, position);
+    string searchText = anyString.Substring(charPos, length);
     Console.WriteLine(searchText);
     return searchText;
 }).DisableAntiforgery();
 
 
-app.MapPost("/", ([FromForm] string searchedText, [FromForm] string anyText) =>
+app.MapPost("/findsubstring", ([FromForm] string searchedText, [FromForm] string anyText) =>
 {
     if (anyText.Contains(searchedText))
     {
