@@ -22,3 +22,6 @@ temp/
 
 # Ignore all contents of node_modules directories
 **/node_modules/
+
+#Ignore launchSetting files since working from two machines.
+**/launchSettings.json
