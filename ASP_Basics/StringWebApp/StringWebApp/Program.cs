@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services for OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -13,6 +17,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 app.UseCors();
+
+// Enable Swagger middleware
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapGet("/", () => "Hello World!");
 
