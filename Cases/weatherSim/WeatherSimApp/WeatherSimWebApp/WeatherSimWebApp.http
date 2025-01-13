@@ -1,0 +1,6 @@
+@WeatherSimWebApp_HostAddress = http://localhost:5208
+
+GET {{WeatherSimWebApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
