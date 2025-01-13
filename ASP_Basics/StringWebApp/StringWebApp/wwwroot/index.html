@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>String Operations</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="stringStyles.css">
 </head>
 <body>
   <header>
@@ -14,28 +14,100 @@
     <section>
       <h2>Reverse Text</h2>
       <form id="reverseTextForm">
-        <label for="anyText">Text:</label>
-        <input type="text" id="anyText" name="anyText" required>
+        <label for="reverseAnyText">Text:</label>
+        <input type="text" id="reverseAnyText" name="anyText" required>
         <button type="submit">Reverse</button>
       </form>
       <p id="reverseTextResult"></p>
     </section>
-
     <section>
-      <h2>Replace Character</h2>
-      <form id="replaceCharForm">
-        <label for="oldChar">Old Character:</label>
-        <input type="text" id="oldChar" name="oldChar" maxlength="1" required>
-        <label for="newChar">New Character:</label>
-        <input type="text" id="newChar" name="newChar" maxlength="1" required>
+    <h2>Replace Character</h2>
+    <form id="replaceCharForm">
+        <label for="replaceOldChar">Old Character:</label>
+        <input type="text" id="replaceOldChar" name="oldChar" maxlength="1" required>
+        <label for="replaceNewChar">New Character:</label>
+        <input type="text" id="replaceNewChar" name="newChar" maxlength="1" required>
         <label for="anyTextReplace">Text:</label>
         <input type="text" id="anyTextReplace" name="anyText" required>
         <button type="submit">Replace</button>
-      </form>
-      <p id="replaceCharResult"></p>
+    </form>
+    <p id="replaceCharResult"></p>
     </section>
-
-    <!-- Add other sections similarly for removespaces, createsinustext, findfirstchar, etc. -->
+    <section>
+    <h2>Remove Spaces</h2>
+    <form id="removeSpacesForm">
+        <label for="anyTextRemove">Text:</label>
+        <input type="text" id="anyTextRemove" name="anyText" required>
+        <button type="submit">Remove</button>
+    </form>
+    <p id="removeSpacesResult"></p>
+    </section>
+    <section>
+    <h2>Convert to Sine Wave Text</h2>
+    <form id="convertSinTextForm">
+        <label for="convertSinText">Text:</label>
+        <input type="text" id="convertSinText" name="anyText" required>
+        <button type="submit">Convert</button>
+    </form>
+    <p id="convertSinTextResult"></p>
+    </section>
+      <section>
+        <h2>Find First Character Instance</h2>
+        <form id="findFirstCharForm">
+          <label for="firstChar">Character to find:</label>
+          <input type="text" id="firstChar" name="anyChar" maxlength="1" required>
+          <label for="anyTextFirst">Text:</label>
+          <input type="text" id="anyTextFirst" name="anyString" required>
+          <button type="submit">Find</button>
+        </form>
+        <p id="findFirstCharResult"></p>
+      </section>
+      <section>
+        <h2>Find Last Character Instance</h2>
+        <form id="findLastCharForm">
+          <label for="lastChar">Character to find:</label>
+          <input type="text" id="lastChar" name="anyChar" maxlength="1" required>
+          <label for="anyTextLast">Text:</label>
+          <input type="text" id="anyTextLast" name="anyString" required>
+          <button type="submit">Find</button>
+        </form>
+        <p id="findLastCharResult"></p>
+      </section>
+      <section>
+        <h2>Find All Character Instances</h2>
+        <form id="findAllCharForm">
+          <label for="findAllChar">Character to find:</label>
+          <input type="text" id="findAllChar" name="anyChar" maxlength="1" required>
+          <label for="anyTextFindAll">Text:</label>
+          <input type="text" id="anyTextFindAll" name="anyString" required>
+          <button type="submit">Find</button>
+        </form>
+        <p id="findAllCharResult"></p>
+      </section>
+      <section>
+        <h2>Creat Substring</h2>
+        <form id="createSubstringForm">
+          <label for="startingChar">Character to find:</label>
+          <input type="text" id="startingChar" name="anyChar" maxlength="1" required>
+          <label for="substringLength">Character to find:</label>
+          <input type="int" id="substringLength" name="length" required>
+          <label for="anyTextCreateSub">Text:</label>
+          <input type="text" id="anyTextCreateSub" name="anyString" required>
+          <button type="submit">Create</button>
+        </form>
+        <p id="createSubstringResult"></p>
+      </section>
+      <section>
+        <h2>Find Substring</h2>
+        <form id="findSubstringForm">
+            <label for="substringToFind">Text:</label>
+            <input type="text" id="substringToFind" name="searchedText" required>
+            <label for="stringToSearchForm">Text:</label>
+            <input type="text" id="stringToSearch" name="anyText" required>
+            <button type="submit">Find</button>
+        </form>
+        <p id="findSubstringResult"></p>
+        </section>
 
   </main>
   <script src="stringScript.js"></script>
