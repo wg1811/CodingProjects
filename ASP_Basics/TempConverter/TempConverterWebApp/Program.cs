@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services for OpenAPI
@@ -24,9 +25,14 @@ app.UseSwaggerUI();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapGet("/ftoc", ([FromForm] int temp) => {
-    double fToCConstant = 5 / 9;
+app.MapPost("/tempconverter", ([FromBody] double temp) => {
+    if (double.IsNaN(temp) || temp < -459.67) // Absolute zero in Fahrenheit
+    {
+        return Results.BadRequest(new { Message = "Invalid input. Please provide a valid temperature greater than absolute zero (-459.67°F)." });
+    }
+    double fToCConstant = 5.0 / 9.0;
     double convertedToC = Math.Round((temp - 32) * fToCConstant, 2);
+    return Results.Ok(convertedToC);
 }).DisableAntiforgery();
 
 

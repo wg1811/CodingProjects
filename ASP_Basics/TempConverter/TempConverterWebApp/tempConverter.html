@@ -1,0 +1,38 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>Temp Converter</title>
+</head>
+
+<body>
+
+    <form id="convertFtoCForm">
+        <input type="number" name="numToConvert" placeholder="Number to Convert">
+        <button type="submit" id="convertFtoCButton" name="convertFtoCButton" >Convert</button>
+    </form>
+    <p id="convertFtoCResult"></p>
+
+
+    <script>
+        document.getElementById('convertFtoCForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('http://localhost:5047/tempconverter', {
+                method: 'POST',
+                headers: { "Content-Type" : "application/json"},
+                body: JSON.stringify({
+                        temp: formData
+                        })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error("Error:", error));
+            const result = await response.text();
+            document.getElementById('convertFtoCResult').innerText = result;
+        }); 
+    </script>
+
+</body>
+
+</html>
