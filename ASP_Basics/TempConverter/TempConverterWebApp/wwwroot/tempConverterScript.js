@@ -1,24 +1,27 @@
-document.getElementById('convertFtoCForm').addEventListener('click', async (event) => {
-    event.preventDefault();
-    const numToConvert = event.target;
-    const response = await fetch('http://localhost:5047/tempconverter', {
-        method: 'POST',
-        headers: { "Content-Type" : "application/json"},
-        body: JSON.stringify({
-                temp: numToConvert
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('convertFtoCButton').addEventListener('click', async (event) => {
+        event.preventDefault();
+        const numToConvert = document.getElementById("numToConvert").value;
+        
+        try {
+            const response = await fetch('http://localhost:5261/tempconverter', {
+                method: 'POST',
+                headers: { "Content-Type" : "application/json"},
+                body: JSON.stringify({
+                        temp: parseFloat(numToConvert)
                 })
-    })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("fetch failed")
+            });
+
+            if (!response.ok) {
+                throw new Error("fetch failed")
+            }
+
+            const data = await response.json();
+            document.getElementById('convertFtoCResult').innerText = `${data}°C`;
+
+        } catch(error) {
+            console.error("Error",error);
+            document.getElementById('convertFtoCResult').innerText = "An error occurred.";
         }
-        return response.json();
-    })
-    .then((data) => {
-        console.log(data)
-    })
-    .catch((error) => {
-        console.error("Error",error);
-    })
-    document.getElementById('convertFtoCResult').innerText = response.json();
-}); 
+    }); 
+});
