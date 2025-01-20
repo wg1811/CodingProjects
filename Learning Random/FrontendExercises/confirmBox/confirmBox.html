@@ -1,0 +1,22 @@
+<!-- For more frontend things: https://github.com/devrim19760304/Front-End-Demos -->
+
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Prompt for user input</h2>
+    <button onclick="promptUserInput()">Click me</button>
+    <p id="showText"></p>
+    <script>
+        function promptUserInput() {
+            let text;
+            let person = prompt("Please enter your name: ", "Enter name here");
+            if (person == null || person == "Enter name here" || person == "") {
+                text = "Please enter your name.";
+            } else {
+                text = "Hello " + person + ". How are you doing today?";
+            }
+            document.getElementById("showText").innerHTML = text;
+        }
+    </script>
+</body>
+</html>
