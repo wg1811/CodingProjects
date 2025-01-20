@@ -8,17 +8,29 @@
           <link rel="stylesheet" href="tempConverterStyles.css">
         </head>
         <body>
-          <header>
             <h1>Temperature Converter</h1>
-          </header>
           <main>
             <section>
-              <h2>Fahrenheit to Celcius</h2>
-                <form id="convertFtoCForm">
-                    <input type="number" id="numToConvert" name="numToConvert" placeholder="Number to Convert">
-                    <button type="button" id="convertFtoCButton" name="convertFtoCButton" >Convert</button>
-                </form>
-                <p id="convertFtoCResult"></p>
+              <form id="tempConverterForm">
+                <label for="numToConvert">Enter temperature</label>
+                <input type="number" id="numToConvert" name="numToConvert" placeholder="Number to Convert" required>
+                
+                <label for="fromUnit">Convert From: </label>
+                <select id="fromUnit" name="fromUnit" required>
+                  <option value="Celsius">Celsius</option>
+                  <option value="Fahrenheit">Fahrenheit</option>
+                  <option value="Kelvin">Kelvin</option>
+                </select>                
+                
+                <label for="toUnit">Convert From: </label>
+                <select id="toUnit" name="toUnit" required>
+                  <option value="Celsius">Celsius</option>
+                  <option value="Fahrenheit">Fahrenheit</option>
+                  <option value="Kelvin">Kelvin</option>
+                </select>
+                <button type="submit" id="convertButton" name="convertButton">Convert</button>
+                <div id="convertedResult"></div>
+              </form>
             </section>
             </main>
 
