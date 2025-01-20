@@ -24,7 +24,7 @@
     static Random random = new Random();
 
     // Creating Weather
-    public void GetWeather()  // Do I want to return weather (return this;) so I can chain methods?  
+    public void GetWeather() // Do I want to return weather (return this;) so I can chain methods?
     {
         double minTemp = -90;
         double maxTemp = 60;
@@ -55,6 +55,43 @@
         return $"Id: {this.Id}, Temp: {this.Temp}, AtmPressure: {this.AtmPressure}, Humidity: {this.Humidity}, \n"
             + $"WindSpeed: {this.WindSpeed}, WindDirection: {this.WindDirection}, Precipitation: {this.Precipitation}, \n"
             + $"Cloudiness: {this.Cloudiness}, Position: ({this.WeatherPosition?.Lat}, {this.WeatherPosition?.Long}), Size: {this.Size}";
+    }
+}
+
+class WeatherSystem
+{
+    public List<Weather>? WeatherList { get; set; }
+
+    public WeatherSystem() { }
+
+    public void CreateWeatherSystem()
+    {
+        int numWeather = 10;
+        for (int i = 0; i < numWeather; i++)
+        {
+            Weather weather = new Weather();
+            weather.GetWeather();
+            weather.ConsoleOut();
+            weather.Id = i;
+            this.WeatherList?.Add(weather);
+        }
+    }
+
+    public void ConsoleWeatherList()
+    {
+        if (this.WeatherList == null || this.WeatherList.Count == 0)
+        {
+            Console.WriteLine("No weather data available.");
+            return;
+        }
+        foreach (Weather weather in WeatherList) // I think this has to be weather.stuff since it's calling from a different class and this means an instance of weatherSystem?
+        {
+            Console.WriteLine(
+                $"Id: {weather.Id}, Temp: {weather.Temp}, AtmPressure: {weather.AtmPressure}, Humidity: {weather.Humidity}, \n"
+                    + $"WindSpeed: {weather.WindSpeed}, WindDirection: {weather.WindDirection}, Precipitation: {weather.Precipitation}, \n"
+                    + $"Cloudiness: {weather.Cloudiness}, Position: ({weather.WeatherPosition?.Lat}, {weather.WeatherPosition?.Long}), Size: {weather.Size}"
+            );
+        }
     }
 }
 

@@ -33,6 +33,17 @@ app.MapGet(
     }
 );
 
+app.MapGet(
+    "/getweathersystem",
+    () =>
+    {
+        WeatherSystem weatherSystem = new WeatherSystem();
+        weatherSystem.CreateWeatherSystem();
+        weatherSystem.ConsoleWeatherList();
+        return Results.Ok();
+    }
+);
+
 app.Run();
 
 
