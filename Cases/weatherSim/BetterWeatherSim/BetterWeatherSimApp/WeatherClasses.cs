@@ -13,8 +13,8 @@ class Weather
 
     public class Position
     {
-        public double Lat { get; set; }
-        public double Long { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
     }
 
     // Empty constructor. Will make GetWeather()
@@ -24,8 +24,9 @@ class Weather
     static Random random = new Random();
 
     // Creating Weather
-    public Weather GetWeather() // Do I want to return weather (return this;) so I can chain methods?
+    public Weather GetWeather(int i) // Do I want to return weather (return this;) so I can chain methods?
     {
+        this.Id = i;
         double minTemp = -90;
         double maxTemp = 60;
         this.Temp = minTemp + random.NextDouble() * (maxTemp - minTemp); // Need to create weighted version
@@ -46,8 +47,8 @@ class Weather
     public static Position GetPosition()
     {
         Position position = new Position();
-        position.Lat = random.Next(701);
-        position.Long = random.Next(701);
+        position.X = random.Next(701);
+        position.Y = random.Next(701);
         return position;
     }
 
@@ -55,7 +56,7 @@ class Weather
     {
         return $"Id: {this.Id}, Temp: {this.Temp}, AtmPressure: {this.AtmPressure}, Humidity: {this.Humidity}, \n"
             + $"WindSpeed: {this.WindSpeed}, WindDirection: {this.WindDirection}, Precipitation: {this.Precipitation}, \n"
-            + $"Cloudiness: {this.Cloudiness}, Position: ({this.WeatherPosition?.Lat}, {this.WeatherPosition?.Long}), Size: {this.Size}";
+            + $"Cloudiness: {this.Cloudiness}, Position: ({this.WeatherPosition?.X}, {this.WeatherPosition?.Y}), Size: {this.Size}";
     }
 }
 
@@ -68,17 +69,18 @@ class WeatherSystem
         WeatherList = new List<Weather>();
     }
 
-    public void CreateWeatherSystem()
+    public WeatherSystem CreateWeatherSystem()
     {
         int numWeather = 10;
         for (int i = 0; i < numWeather; i++)
         {
             Weather weather = new Weather();
-            weather.GetWeather();
+            weather.GetWeather(i);
             weather.ToString();
-            weather.Id = i;
             this.WeatherList?.Add(weather);
         }
+        return this;
+
     }
 
     public void ConsoleWeatherList()
