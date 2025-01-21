@@ -9,18 +9,20 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddPolicy("AllowAllOrigins", 
+    policy =>
     {
         policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     });
 });
 
 var app = builder.Build();
-app.UseCors();
+app.UseCors("AllowAllOrigins");
 
 // Enable Swagger middleware
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseStaticFiles();
 
 app.MapGet("/", () => "Hello World");
 
@@ -29,7 +31,7 @@ app.MapGet(
     () =>
     {
         Weather weather = new Weather();
-        weather.GetWeather();
+        weather.GetWeather(0); // Need to get last id and feed it here.
         Console.WriteLine(weather.ToString());
         return Results.Ok();
     }
@@ -42,7 +44,7 @@ app.MapGet(
         WeatherSystem weatherSystem = new WeatherSystem();
         weatherSystem.CreateWeatherSystem();
         weatherSystem.ConsoleWeatherList();
-        return Results.Ok();
+        return Results.Ok(weatherSystem);
     }
 );
 
