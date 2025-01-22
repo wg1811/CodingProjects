@@ -19,7 +19,6 @@ app.MapPost("/calculatebmi", ([FromBody] Person person) =>
     double persHeight = person.Height;
     double persBmi = Math.Round((persWeight / Math.Pow(persHeight, 2)), 2);
     person.Bmi = persBmi;
-    return persBmi;
 });
 
 
