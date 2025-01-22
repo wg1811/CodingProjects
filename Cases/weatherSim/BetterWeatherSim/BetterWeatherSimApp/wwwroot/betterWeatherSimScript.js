@@ -28,7 +28,18 @@ async function fetchWeather() {
     const response = await fetch("http://localhost:5000/getweathersystem");
     const weatherData = await response.json();
     console.log(JSON.stringify(weatherData, null, 2));
-    weatherSystem = weatherData.weatherList.map(data => new WeatherShape(data));
+    weatherSystem = weatherData.weatherList.map(data => new WeatherShape(
+        data.id,
+        data.temp,
+        data.atmPressure,
+        data.humidity,
+        data.windSpeed,
+        data.windDirection,
+        data.precipitation,
+        data.cloudiness,
+        data.weatherPosition,
+        data.size
+    ));
     console.log("______________________" + JSON.stringify(weatherSystem, null, 2));
 }
 
@@ -37,35 +48,38 @@ async function fetchWeather() {
 
 // The weather will be drawn as a circle of a particular radius, color and speed
 class WeatherShape {
-    constructor(id, temp, pressure, humidity, windSpeed, windDirection, preciptation, cloudiness, weatherPosition, size) {
+    constructor(id, temp, atmPressure, humidity, windSpeed, windDirection, precipitation, cloudiness, weatherPosition, size) {
         this.id = id;
         this.temp = temp;
-        this.pressure = pressure;
+        this.pressure = atmPressure;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
         this.windDirection = windDirection;
-        this.preciptation = preciptation;
+        this.precipitation = precipitation;
         this.cloudiness = cloudiness;
         this.weatherPosition = weatherPosition;
         this.size = size;
-        this.color = `rgba(${Math.min(temp + 90, 255)}, ${cloudiness * 2.55}, ${preciptation / 8}, ${Math.max(1 - windSpeed / 100, 0.4)})`;
+        this.color = `rgba(${Math.floor(Math.min(temp + 90, 255))}, ${Math.floor(cloudiness * 2.55)}, ${Math.floor(precipitation / 8)}, ${Math.floor(Math.max(1 - windSpeed / 100), 0.4)})`;
     }
 
     draw(ctx) {
         ctx.beginPath();
         ctx.arc(this.weatherPosition.x, this.weatherPosition.y, this.size, 0, Math.PI * 2);
-        ctx.fill(this.color);
+        console.log("Draw color:  " + this.color);
+        ctx.fillStyle = this.color;
+        ctx.fill();
         ctx.closePath();
     }
 
     move(ctx) {
-        if (this.position && this.position.x !== undefined && this.position.y !== undefined) {
-            this.position.x += Math.sin(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 10);
-            this.position.y -= Math.cos(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 10);
-            if (this.position.x > ctx.canvas.width) this.position.x = 0;
-            if (this.position.y > ctx.canvas.height) this.position.y = 0;
-            if (this.position.x < 0) this.position.x = ctx.canvas.width;
-            if (this.position.y < 0) this.position.y = ctx.canvas.height;
+        if (this.weatherPosition && this.weatherPosition.x !== undefined && this.weatherPosition.y !== undefined) {
+            this.weatherPosition.x += Math.sin(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 100);
+            this.weatherPosition.y -= Math.cos(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 100);
+            // This is to wrap around the canvas, but I don't think I want to do a global map yet?
+            // if (this.weatherPosition.x > ctx.canvas.width) this.weatherPosition.x = 0;
+            // if (this.weatherPosition.y > ctx.canvas.height) this.weatherPosition.y = 0;
+            // if (this.weatherPosition.x < 0) this.weatherPosition.x = ctx.canvas.width;
+            // if (this.weatherPosition.y < 0) this.weatherPosition.y = ctx.canvas.height;
         } else {
             console.error("Position is undefined or missing x/y:", this.position);
         }
