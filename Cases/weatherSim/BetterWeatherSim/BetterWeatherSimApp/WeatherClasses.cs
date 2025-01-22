@@ -10,6 +10,7 @@ class Weather
     public double Cloudiness { get; set; } // 0 to 100%
     public Position? WeatherPosition { get; set; }
     public double Size { get; set; }
+     
 
     public class Position
     {
@@ -28,18 +29,33 @@ class Weather
     {
         this.Id = i;
         double minTemp = -90;
+        double regMinTemp = -10;
         double maxTemp = 60;
-        this.Temp = minTemp + random.NextDouble() * (maxTemp - minTemp); // Need to create weighted version
+        double regMaxTemp = 30;
+        double extremeRandom = random.NextDouble();
+        
+        // Weighted temp so usually not insane.
+        if (extremeRandom > .8) {
+        this.Temp = regMinTemp + extremeRandom * (regMaxTemp - regMinTemp); 
+        } else {
+            this.Temp = minTemp + extremeRandom * (maxTemp - minTemp); 
+        }
         double minAtm = 870;
         double maxAtm = 1085;
         this.AtmPressure = minAtm + random.NextDouble() * (maxAtm - minAtm);
         this.Humidity = random.Next(101);
-        this.WindSpeed = random.Next(121); // Need to create weighted version
+        
+        // Weighted windspeed
+        this.WindSpeed = (extremeRandom >= .8) ? random.Next(51, 121) : random.Next(51); 
         this.WindDirection = random.Next(360);
-        this.Precipitation = random.Next(2001); // Need to create weighted version and connect to Cloudiness
-        this.Cloudiness = random.Next(101); // Need to connect to Precipitation
+        this.Cloudiness = random.Next(101); 
+
+        //Weighted precipitation connected to cloudiness
+        if (this.Cloudiness > 60) {
+            this.Precipitation = (extremeRandom >= .8) ? random.Next(150, 2001) : random.Next(201); 
+        }
         this.WeatherPosition = GetPosition();
-        this.Size = random.Next(10, 300);
+        this.Size = (extremeRandom >= .8) ? random.Next(80, 300) : random.Next(10, 80);
         return this;
     }
 

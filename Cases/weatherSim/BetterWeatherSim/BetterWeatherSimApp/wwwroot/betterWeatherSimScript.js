@@ -12,6 +12,8 @@ document.getElementById("startButton").addEventListener("click", fetchWeather);
 let weatherSystem = [];
 
 animate();
+setInterval(fetchWeather, 5000); 
+
 
 
 //Functions
@@ -27,7 +29,6 @@ function animate() {
 async function fetchWeather() {
     const response = await fetch("http://localhost:5000/getweathersystem");
     const weatherData = await response.json();
-    console.log(JSON.stringify(weatherData, null, 2));
     weatherSystem = weatherData.weatherList.map(data => new WeatherShape(
         data.id,
         data.temp,
@@ -40,7 +41,6 @@ async function fetchWeather() {
         data.weatherPosition,
         data.size
     ));
-    console.log("______________________" + JSON.stringify(weatherSystem, null, 2));
 }
 
 
@@ -59,14 +59,13 @@ class WeatherShape {
         this.cloudiness = cloudiness;
         this.weatherPosition = weatherPosition;
         this.size = size;
-        this.color = `rgba(${Math.floor(Math.min(temp + 90, 255))}, ${Math.floor(cloudiness * 2.55)}, ${Math.floor(precipitation / 8)}, ${Math.floor(Math.max(1 - windSpeed / 100), 0.4)})`;
+        this.color = `rgba(${Math.floor(Math.min(temp + 90, 255))}, ${Math.floor(cloudiness * 2.55)}, ${Math.floor(precipitation / 8)}, ${Math.max((1 - windSpeed / 100), 0.4)})`;
     }
 
     draw(ctx) {
+        ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.weatherPosition.x, this.weatherPosition.y, this.size, 0, Math.PI * 2);
-        console.log("Draw color:  " + this.color);
-        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
     }
