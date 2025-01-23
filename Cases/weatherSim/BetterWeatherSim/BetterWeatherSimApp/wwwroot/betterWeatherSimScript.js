@@ -1,24 +1,37 @@
 // Making canvas
 const size = 700;
-let canvasHeight = 1;
 const myCanvas = document.getElementById("myCanvas");
-myCanvas.width = size;
-myCanvas.height = size / canvasHeight;
+const worldMap = new Image();
+worldMap.src = "./ShadedWorldMap.png";
 
 const ctx = myCanvas.getContext("2d");
+
+worldMap.onload = function () {
+    const aspectRatio = worldMap.width / worldMap.height;
+    console.log(worldMap.width + " is the width. " + worldMap.height + " is the height.");
+    const canvasWidth = size;
+    const canvasHeight = canvasWidth / aspectRatio;
+    myCanvas.width = canvasWidth;
+    myCanvas.height = canvasHeight;
+    ctx.drawImage(worldMap, 0, 0, myCanvas.width, myCanvas.height);
+    animate();
+}
+
+  
 
 document.getElementById("startButton").addEventListener("click", fetchWeather);
 
 let weatherSystem = [];
 
-animate();
-setInterval(fetchWeather, 5000); 
+setInterval(fetchWeather, 20000); 
 
 
 
 //Functions
 function animate() {
-    ctx.clearRect(0, 0, size, size);
+    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+    ctx.drawImage(worldMap, 0, 0, myCanvas.width, myCanvas.height);
+
     weatherSystem.forEach((shape) => {
         shape.move(ctx);
         shape.draw(ctx);
@@ -43,7 +56,29 @@ async function fetchWeather() {
     ));
 }
 
+// Want to show weather instance data
+// let currentWeatherIndex = 0;
 
+// function updateWeatherDisplay() {
+//     const weather = weatherData[currentWeatherIndex];
+    
+//     document.getElementById("temp").textContent = weather.Temp;
+//     document.getElementById("atmPressure").textContent = weather.AtmPressure;
+//     document.getElementById("humidity").textContent = weather.Humidity;
+//     document.getElementById("windSpeed").textContent = weather.WindSpeed;
+//     document.getElementById("windDirection").textContent = weather.WindDirection;
+//     document.getElementById("precipitation").textContent = weather.Precipitation;
+//     document.getElementById("cloudiness").textContent = weather.Cloudiness;
+//     document.getElementById("position").textContent = `${weather.WeatherPosition.latitude}, ${weather.WeatherPosition.longitude}`;
+// }
+
+// document.getElementById("nextWeather").addEventListener("click", () => {
+//     currentWeatherIndex = (currentWeatherIndex + 1) % weatherData.length; // Cycle through the weather instances
+//     updateWeatherDisplay();
+// });
+
+// // Initialize weather details on page load
+// updateWeatherDisplay();
 
 
 // The weather will be drawn as a circle of a particular radius, color and speed

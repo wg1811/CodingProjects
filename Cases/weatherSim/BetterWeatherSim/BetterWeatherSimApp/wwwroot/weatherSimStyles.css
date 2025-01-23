@@ -11,6 +11,15 @@ body {
     min-height: 100vh;
 }
 
+#weatherProps p {
+    margin: 5px 0;
+}
+
+#weatherDetails {
+    margin-top: 20px;
+    text-align: left;
+}
+
 /* Heading styling */
 h1 {
     color: #333;
