@@ -5,6 +5,13 @@ const worldMap = new Image();
 worldMap.src = "./ShadedWorldMap.png";
 
 const ctx = myCanvas.getContext("2d");
+let weatherData = [];
+let weatherSystem = [];
+let dayLength = 50000;
+// Want to show individual weather instance data
+let currentWeatherId = 0;
+
+
 
 worldMap.onload = function () {
     const aspectRatio = worldMap.width / worldMap.height;
@@ -19,11 +26,13 @@ worldMap.onload = function () {
 
   
 
-document.getElementById("startButton").addEventListener("click", fetchWeather);
+document.getElementById("startButton").addEventListener("click", async () => {
+    await fetchWeather().catch(console.error);
+    updateWeatherDisplay();
+});
 
-let weatherSystem = [];
+setInterval(fetchWeather, dayLength); 
 
-setInterval(fetchWeather, 20000); 
 
 
 
@@ -41,7 +50,7 @@ function animate() {
 
 async function fetchWeather() {
     const response = await fetch("http://localhost:5000/getweathersystem");
-    const weatherData = await response.json();
+    weatherData = await response.json();
     weatherSystem = weatherData.weatherList.map(data => new WeatherShape(
         data.id,
         data.temp,
@@ -52,33 +61,43 @@ async function fetchWeather() {
         data.precipitation,
         data.cloudiness,
         data.weatherPosition,
-        data.size
+        data.size,
     ));
+    console.log(JSON.stringify(weatherSystem, null, 2) + " is System. \nThis is the Data: " + JSON.stringify(weatherData, null, 2));
 }
 
-// Want to show weather instance data
-// let currentWeatherIndex = 0;
 
-// function updateWeatherDisplay() {
-//     const weather = weatherData[currentWeatherIndex];
-    
-//     document.getElementById("temp").textContent = weather.Temp;
-//     document.getElementById("atmPressure").textContent = weather.AtmPressure;
-//     document.getElementById("humidity").textContent = weather.Humidity;
-//     document.getElementById("windSpeed").textContent = weather.WindSpeed;
-//     document.getElementById("windDirection").textContent = weather.WindDirection;
-//     document.getElementById("precipitation").textContent = weather.Precipitation;
-//     document.getElementById("cloudiness").textContent = weather.Cloudiness;
-//     document.getElementById("position").textContent = `${weather.WeatherPosition.latitude}, ${weather.WeatherPosition.longitude}`;
-// }
 
-// document.getElementById("nextWeather").addEventListener("click", () => {
-//     currentWeatherIndex = (currentWeatherIndex + 1) % weatherData.length; // Cycle through the weather instances
-//     updateWeatherDisplay();
-// });
+function updateWeatherDisplay() {
+    //console.log("weatherData is a " + typeof(weatherData) + "weatherData:", JSON.stringify(weatherData, null, 2));
+    const weather = weatherData.weatherList.find(item => item.id === currentWeatherId);
+    console.log("currentWeatherId = " + currentWeatherId + "\n..." + JSON.stringify(weather, null, 2));
+    document.getElementById("temp").textContent = weather.temp;
+    document.getElementById("atmPressure").textContent = weather.atmPressure;
+    document.getElementById("humidity").textContent = weather.humidity;
+    document.getElementById("windSpeed").textContent = weather.windSpeed;
+    document.getElementById("windDirection").textContent = weather.windDirection;
+    document.getElementById("precipitation").textContent = weather.precipitation;
+    document.getElementById("cloudiness").textContent = weather.cloudiness;
+    document.getElementById("position").textContent = `${weather.weatherPosition.lat}, ${weather.weatherPosition.long}`;
+    document.getElementById("size").textContent = weather.size;
+    hightlightCurrent(weather);
+}
 
-// // Initialize weather details on page load
-// updateWeatherDisplay();
+    document.getElementById("nextWeather").addEventListener("click", () => {
+    currentWeatherId = (currentWeatherId + 1) % weatherSystem.length; 
+    updateWeatherDisplay();
+});
+
+// I want the current weather displayed to be highlighted
+function hightlightCurrent(weather) {
+    weather.color = `rgba(43, 9, 194, 0.93)`;
+    //console.log(weather.color + " is the highlighted color");
+}
+
+function updateCurrentPosition(weather) {
+    document.getElementById("position").textContent = `${weather.weatherPosition.lat.toFixed(2)}, ${weather.weatherPosition.long.toFixed(2)}`;
+}
 
 
 // The weather will be drawn as a circle of a particular radius, color and speed
@@ -98,24 +117,25 @@ class WeatherShape {
     }
 
     draw(ctx) {
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = this.id === currentWeatherId ? 'rgba(43, 9, 194, 0.93)' : this.color;
         ctx.beginPath();
-        ctx.arc(this.weatherPosition.x, this.weatherPosition.y, this.size, 0, Math.PI * 2);
+        ctx.arc(this.weatherPosition.lat, this.weatherPosition.long, this.size, 0, Math.PI * 2);
         ctx.fill();
         ctx.closePath();
     }
 
     move(ctx) {
-        if (this.weatherPosition && this.weatherPosition.x !== undefined && this.weatherPosition.y !== undefined) {
-            this.weatherPosition.x += Math.sin(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 100);
-            this.weatherPosition.y -= Math.cos(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 100);
-            // This is to wrap around the canvas, but I don't think I want to do a global map yet?
-            // if (this.weatherPosition.x > ctx.canvas.width) this.weatherPosition.x = 0;
-            // if (this.weatherPosition.y > ctx.canvas.height) this.weatherPosition.y = 0;
-            // if (this.weatherPosition.x < 0) this.weatherPosition.x = ctx.canvas.width;
-            // if (this.weatherPosition.y < 0) this.weatherPosition.y = ctx.canvas.height;
+        if (this.weatherPosition && this.weatherPosition.lat !== undefined && this.weatherPosition.long !== undefined) {
+            this.weatherPosition.lat += Math.sin(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 100);
+            this.weatherPosition.long -= Math.cos(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 100);
+            //This is to wrap around the canvas for a global map
+            if (this.weatherPosition.lat > ctx.canvas.width) this.weatherPosition.lat = 0;
+            if (this.weatherPosition.long > ctx.canvas.height) this.weatherPosition.long = 0;
+            if (this.weatherPosition.lat < 0) this.weatherPosition.lat = ctx.canvas.width;
+            if (this.weatherPosition.long < 0) this.weatherPosition.long = ctx.canvas.height;
         } else {
             console.error("Position is undefined or missing x/y:", this.position);
         }
+        updateCurrentPosition(this);
     }
 }

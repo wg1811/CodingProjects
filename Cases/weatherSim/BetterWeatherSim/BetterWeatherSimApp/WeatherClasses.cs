@@ -10,12 +10,11 @@ class Weather
     public double Cloudiness { get; set; } // 0 to 100%
     public Position? WeatherPosition { get; set; }
     public double Size { get; set; }
-     
 
     public class Position
     {
-        public double X { get; set; }
-        public double Y { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
     }
 
     // Empty constructor. Will make GetWeather()
@@ -33,26 +32,30 @@ class Weather
         double maxTemp = 60;
         double regMaxTemp = 30;
         double extremeRandom = random.NextDouble();
-        
+
         // Weighted temp so usually not insane.
-        if (extremeRandom > .8) {
-        this.Temp = regMinTemp + extremeRandom * (regMaxTemp - regMinTemp); 
-        } else {
-            this.Temp = minTemp + extremeRandom * (maxTemp - minTemp); 
+        if (extremeRandom > .8)
+        {
+            this.Temp = Math.Round(regMinTemp + extremeRandom * (regMaxTemp - regMinTemp), 2);
+        }
+        else
+        {
+            this.Temp = Math.Round(minTemp + extremeRandom * (maxTemp - minTemp), 2);
         }
         double minAtm = 870;
         double maxAtm = 1085;
-        this.AtmPressure = minAtm + random.NextDouble() * (maxAtm - minAtm);
+        this.AtmPressure = Math.Round(minAtm + random.NextDouble() * (maxAtm - minAtm), 2);
         this.Humidity = random.Next(101);
-        
+
         // Weighted windspeed
-        this.WindSpeed = (extremeRandom >= .8) ? random.Next(51, 121) : random.Next(51); 
+        this.WindSpeed = (extremeRandom >= .8) ? random.Next(51, 121) : random.Next(51);
         this.WindDirection = random.Next(360);
-        this.Cloudiness = random.Next(101); 
+        this.Cloudiness = random.Next(101);
 
         //Weighted precipitation connected to cloudiness
-        if (this.Cloudiness > 60) {
-            this.Precipitation = (extremeRandom >= .8) ? random.Next(150, 2001) : random.Next(201); 
+        if (this.Cloudiness > 30)
+        {
+            this.Precipitation = (extremeRandom >= .8) ? random.Next(150, 2001) : random.Next(201);
         }
         this.WeatherPosition = GetPosition();
         this.Size = (extremeRandom >= .8) ? random.Next(80, 300) : random.Next(10, 80);
@@ -63,8 +66,8 @@ class Weather
     public static Position GetPosition()
     {
         Position position = new Position();
-        position.X = random.Next(701);
-        position.Y = random.Next(701);
+        position.Lat = random.Next(701);
+        position.Long = random.Next(701);
         return position;
     }
 
@@ -72,7 +75,7 @@ class Weather
     {
         return $"Id: {this.Id}, Temp: {this.Temp}, AtmPressure: {this.AtmPressure}, Humidity: {this.Humidity}, \n"
             + $"WindSpeed: {this.WindSpeed}, WindDirection: {this.WindDirection}, Precipitation: {this.Precipitation}, \n"
-            + $"Cloudiness: {this.Cloudiness}, Position: ({this.WeatherPosition?.X}, {this.WeatherPosition?.Y}), Size: {this.Size}";
+            + $"Cloudiness: {this.Cloudiness}, Position: ({this.WeatherPosition?.Lat}, {this.WeatherPosition?.Long}), Size: {this.Size}";
     }
 }
 
@@ -96,7 +99,6 @@ class WeatherSystem
             this.WeatherList?.Add(weather);
         }
         return this;
-
     }
 
     public void ConsoleWeatherList()
