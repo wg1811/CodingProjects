@@ -5,7 +5,7 @@ namespace InheritanceLearning
     internal class Program
     {
         public static void Main(string[] args)
-        {            
+        {
             // Snake Instances
             Snake snake1 = new Snake
             {
@@ -13,7 +13,7 @@ namespace InheritanceLearning
                 Age = 5,
                 Habitat = new string[] { "Desert", "Jungle" }, //Ask GTP how to encapsulate this so I can only choose from the options in the init.
                 Length = 3.5,
-                IsVenomous = true
+                IsVenomous = true,
             };
 
             Snake snake2 = new Snake
@@ -22,7 +22,7 @@ namespace InheritanceLearning
                 Age = 8,
                 Habitat = new string[] { "Jungle", "Plains" },
                 Length = 4.2,
-                IsVenomous = false
+                IsVenomous = false,
             };
 
             // Bear Instances
@@ -32,7 +32,7 @@ namespace InheritanceLearning
                 Age = 12,
                 Habitat = new string[] { "Forest", "Mountain" },
                 IsHibernating = true,
-                BearType = new string[] { "Grizzly" }
+                BearType = new string[] { "Grizzly" },
             };
 
             Bear bear2 = new Bear
@@ -41,7 +41,7 @@ namespace InheritanceLearning
                 Age = 15,
                 Habitat = new string[] { "Polar" },
                 IsHibernating = true,
-                BearType = new string[] { "Polar" }
+                BearType = new string[] { "Polar" },
             };
 
             // Cat Instances
@@ -50,7 +50,7 @@ namespace InheritanceLearning
                 Name = "Lion",
                 Age = 7,
                 Habitat = new string[] { "Savannah", "Grassland" },
-                CatType = new string[] { "Lion" }
+                CatType = new string[] { "Lion" },
             };
 
             Cat cat2 = new Cat
@@ -58,7 +58,7 @@ namespace InheritanceLearning
                 Name = "Housecat",
                 Age = 3,
                 Habitat = new string[] { "Urban" },
-                CatType = new string[] { "Housecat" }
+                CatType = new string[] { "Housecat" },
             };
 
             // Display info for each animal
@@ -68,7 +68,7 @@ namespace InheritanceLearning
             bear2.DisplayInfo();
             cat1.DisplayInfo();
             cat2.DisplayInfo();
-            
+
             Console.WriteLine("hello world");
 
             Person firstPerson = new() { Name = "Bob", Age = 78 };

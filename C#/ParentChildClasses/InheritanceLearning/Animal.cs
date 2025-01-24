@@ -13,14 +13,16 @@ namespace InheritanceLearning
 
         public virtual void DisplayInfo()
         {
-            Console.WriteLine($"The animal's name is {Name}\nThe animals's age is {Age}\nThe animal lives in the {Habitat}.");
+            Console.WriteLine(
+                $"The animal's name is {Name}\nThe animals's age is {Age}\nThe animal lives in the {Habitat}."
+            );
         }
     }
 
     public class Snake : Animal
     {
-        public double Length {get; set;}
-        public Boolean IsVenomous {get; set;}
+        public double Length { get; set; }
+        public Boolean IsVenomous { get; set; }
 
         public override void DisplayInfo()
         {
@@ -33,8 +35,7 @@ namespace InheritanceLearning
     public class Bear : Animal
     {
         public Boolean IsHibernating { get; set; }
-        public string[] BearType { get; set; } =
-        ["Polar", "Grizzly", "Black", "Brown"];
+        public string[] BearType { get; set; } = ["Polar", "Grizzly", "Black", "Brown"];
 
         public override void DisplayInfo()
         {
@@ -45,9 +46,6 @@ namespace InheritanceLearning
 
     public class Cat : Animal
     {
-        public string[] CatType { get; set; } = 
-        ["Tiger", "Lion", "Jaguar", "Leapord", "Housecat"];
+        public string[] CatType { get; set; } = ["Tiger", "Lion", "Jaguar", "Leapord", "Housecat"];
     }
-
 }
-
