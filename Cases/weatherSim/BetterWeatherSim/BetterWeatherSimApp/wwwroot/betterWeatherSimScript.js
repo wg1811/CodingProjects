@@ -1,28 +1,82 @@
 // Making canvas
 const size = 700;
 const myCanvas = document.getElementById("myCanvas");
-const worldMap = new Image();
-worldMap.src = "./ShadedWorldMap.png";
+
+// Map image not necessary cuz vectors.
+//const worldMap = new Image();
+//worldMap.src = "./ShadedWorldMap.png";
 
 const ctx = myCanvas.getContext("2d");
+const map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates and zoom level
+
 let weatherData = [];
 let weatherSystem = [];
 let dayLength = 50000;
 // Want to show individual weather instance data
 let currentWeatherId = 0;
 
+const fs = require('fs');
+const path = require('path');
 
+// Path to the data folder
+const dataFolderPath = 'C:\\Users\\Instruktor.P-02462\\Coding\\CodingProjects\\Cases\\weatherSim\\BetterWeatherSim\\BetterWeatherSimApp\\wwwroot\\data';
 
-worldMap.onload = function () {
-    const aspectRatio = worldMap.width / worldMap.height;
-    console.log(worldMap.width + " is the width. " + worldMap.height + " is the height.");
-    const canvasWidth = size;
-    const canvasHeight = canvasWidth / aspectRatio;
-    myCanvas.width = canvasWidth;
-    myCanvas.height = canvasHeight;
-    ctx.drawImage(worldMap, 0, 0, myCanvas.width, myCanvas.height);
-    animate();
+// Function to read all GeoJSON files and parse them into an array
+function loadGeoJSONFiles() {
+    // Read the files in the data folder
+    const files = fs.readdirSync(dataFolderPath);
+
+    // Filter out non-GeoJSON files (optional if you only want .geojson files)
+    const geoJSONFiles = files.filter(file => file.endsWith('.geojson'));
+
+    // Initialize an array to hold all GeoJSON data
+    const geoJSONArray = [];
+
+    // Loop through each GeoJSON file
+    geoJSONFiles.forEach(file => {
+        const filePath = path.join(dataFolderPath, file);
+
+        // Read and parse each GeoJSON file
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        const geoJSON = JSON.parse(fileContent);
+
+        // Add the parsed GeoJSON to the array
+        geoJSONArray.push(geoJSON);
+    });
+
+    return geoJSONArray;
 }
+
+// Get all GeoJSON files into an array
+const allGeoJSON = loadGeoJSONFiles();
+
+console.log(allGeoJSON);
+
+
+
+function loadGeoJSONFiles(filePaths) {
+    filePaths.forEach(path => {
+      fetch(path)
+        .then(response => response.json())
+        .then(data => {
+          // Add each GeoJSON file as a layer to the map
+          L.geoJSON(data).addTo(map);
+        })
+        .catch(error => console.error('Error loading GeoJSON:', path, error));
+    });
+  }
+
+  // Not using map image.  Need to figure out how to load vector map
+// worldMap.onload = function () {
+//     const aspectRatio = worldMap.width / worldMap.height;
+//     console.log(worldMap.width + " is the width. " + worldMap.height + " is the height.");
+//     const canvasWidth = size;
+//     const canvasHeight = canvasWidth / aspectRatio;
+//     myCanvas.width = canvasWidth;
+//     myCanvas.height = canvasHeight;
+//     ctx.drawImage(worldMap, 0, 0, myCanvas.width, myCanvas.height);
+//     animate();
+// }
 
   
 
