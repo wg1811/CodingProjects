@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="testStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <h1>Test Page </h1>
+    <div id="main-container">
+        <div id="questions">
+            <form id="questions-form">
+                <!--Question 1 Start -->
+                <div class="question">
+                    <p> 1. What is the capital city of Norway</p>
+                    <label>
+                        <input type="radio" name="question1" id="question1a" value="a"> a) Madrid
+                    </label><br>
+                    <label> 
+                        <input type="radio" name="question1" id="question1b" value="b"> b) Oslo
+                    </label><br>
+                </div>
+                <!--end of question one -->
+
+                <!--Question 2 Start -->
+                <div class="question">
+                    <p> 2. What is the Longest river in the world</p>
+                    <label>
+                        <input type="radio" name="question2" id="question2a" value="a"> a) Nile
+                    </label><br>
+                    <label> 
+                        <input type="radio" name="question2" id="question2b" value="b"> b) Amazon
+                    </label><br>
+                </div>
+                <!--end of question two -->
+
+                <button id="submit-test-button" type="submit">Submit Test</button>
+
+
+            </form>
+        </div>
+    </div>
+    
+
+    <script src="testScript.js"></script>
+</body>
+</html>

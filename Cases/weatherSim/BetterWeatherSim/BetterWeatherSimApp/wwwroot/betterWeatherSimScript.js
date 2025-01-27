@@ -9,62 +9,19 @@ const myCanvas = document.getElementById("myCanvas");
 const ctx = myCanvas.getContext("2d");
 const map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates and zoom level
 
+// Declaring variables needed 'globally'.  
 let weatherData = [];
+let fileData = [];
 let weatherSystem = [];
 let dayLength = 50000;
 // Want to show individual weather instance data
 let currentWeatherId = 0;
-
-const fs = require('fs');
-const path = require('path');
-
-// Path to the data folder
-const dataFolderPath = 'C:\\Users\\Instruktor.P-02462\\Coding\\CodingProjects\\Cases\\weatherSim\\BetterWeatherSim\\BetterWeatherSimApp\\wwwroot\\data';
-
-// Function to read all GeoJSON files and parse them into an array
-function loadGeoJSONFiles() {
-    // Read the files in the data folder
-    const files = fs.readdirSync(dataFolderPath);
-
-    // Filter out non-GeoJSON files (optional if you only want .geojson files)
-    const geoJSONFiles = files.filter(file => file.endsWith('.geojson'));
-
-    // Initialize an array to hold all GeoJSON data
-    const geoJSONArray = [];
-
-    // Loop through each GeoJSON file
-    geoJSONFiles.forEach(file => {
-        const filePath = path.join(dataFolderPath, file);
-
-        // Read and parse each GeoJSON file
-        const fileContent = fs.readFileSync(filePath, 'utf8');
-        const geoJSON = JSON.parse(fileContent);
-
-        // Add the parsed GeoJSON to the array
-        geoJSONArray.push(geoJSON);
-    });
-
-    return geoJSONArray;
-}
 
 // Get all GeoJSON files into an array
 const allGeoJSON = loadGeoJSONFiles();
 
 console.log(allGeoJSON);
 
-
-
-function loadGeoJSONFiles(filePaths) {
-    filePaths.forEach(path => {
-      fetch(path)
-        .then(response => response.json())
-        .then(data => {
-          // Add each GeoJSON file as a layer to the map
-          L.geoJSON(data).addTo(map);
-        })
-        .catch(error => console.error('Error loading GeoJSON:', path, error));
-    });
-  }
 
   // Not using map image.  Need to figure out how to load vector map
 // worldMap.onload = function () {
@@ -82,6 +39,8 @@ function loadGeoJSONFiles(filePaths) {
 
 document.getElementById("startButton").addEventListener("click", async () => {
     await fetchWeather().catch(console.error);
+    await loadGeoJSONFiles().catch(console.error);
+    showGeoJSONFiles(fileData);
     updateWeatherDisplay();
 });
 
@@ -117,10 +76,27 @@ async function fetchWeather() {
         data.weatherPosition,
         data.size,
     ));
-    console.log(JSON.stringify(weatherSystem, null, 2) + " is System. \nThis is the Data: " + JSON.stringify(weatherData, null, 2));
+    //console.log(JSON.stringify(weatherSystem, null, 2) + " is System. \nThis is the Data: " + JSON.stringify(weatherData, null, 2));
 }
 
+async function loadGeoJSONFiles() {
+    const response = await fetch("http://localhost:5000/getgeofiles");
+    fileData = await response.json();
+    console.log("___________________________" + JSON.stringify(fileData, null, 2));
+    return fileData;
+}
 
+function showGeoJSONFiles(filePaths) {
+    filePaths.forEach(path => {
+      fetch(path)
+        .then(response => response.json())
+        .then(data => {
+          // Add each GeoJSON file as a layer to the map
+          L.geoJSON(data).addTo(map);
+        })
+        .catch(error => console.error('Error loading GeoJSON:', path, error));
+    });
+  }
 
 function updateWeatherDisplay() {
     //console.log("weatherData is a " + typeof(weatherData) + "weatherData:", JSON.stringify(weatherData, null, 2));

@@ -1,3 +1,4 @@
+using BetterWeatherSimApp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,6 +48,17 @@ app.MapGet(
         weatherSystem.CreateWeatherSystem();
         weatherSystem.ConsoleWeatherList();
         return Results.Ok(weatherSystem);
+    }
+);
+
+app.MapGet(
+    "/getgeofiles",
+    () =>
+    {
+        GeoJSONManager manager = new GeoJSONManager();
+        List<object> geoFiles = manager.LoadGeoFiles();
+        Console.WriteLine(geoFiles + " is the geofiles list.");
+        return Results.Ok(geoFiles);
     }
 );
 
