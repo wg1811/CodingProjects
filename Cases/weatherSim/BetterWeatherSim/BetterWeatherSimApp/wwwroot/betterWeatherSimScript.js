@@ -18,7 +18,7 @@ let dayLength = 50000;
 let currentWeatherId = 0;
 
 // Get all GeoJSON files into an array
-const allGeoJSON = loadGeoJSONFiles();
+const allGeoJSON = fetchGeoJSONFiles();
 
 console.log(allGeoJSON);
 
@@ -38,10 +38,13 @@ console.log(allGeoJSON);
   
 
 document.getElementById("startButton").addEventListener("click", async () => {
-    await fetchWeather().catch(console.error);
-    await loadGeoJSONFiles().catch(console.error);
+    try{
+    await Promise.all([fetchWeather(), fetchGeoJSONFiles()]);
     showGeoJSONFiles(fileData);
     updateWeatherDisplay();
+    } catch (error) {
+        console.error("Error during initialization", error);
+    }
 });
 
 setInterval(fetchWeather, dayLength); 
@@ -62,7 +65,7 @@ function animate() {
 }
 
 async function fetchWeather() {
-    const response = await fetch("http://localhost:5000/getweathersystem");
+    const response = await fetch("http://localhost:5030/getweathersystem");
     weatherData = await response.json();
     weatherSystem = weatherData.weatherList.map(data => new WeatherShape(
         data.id,
@@ -79,17 +82,30 @@ async function fetchWeather() {
     //console.log(JSON.stringify(weatherSystem, null, 2) + " is System. \nThis is the Data: " + JSON.stringify(weatherData, null, 2));
 }
 
-async function loadGeoJSONFiles() {
-    const response = await fetch("http://localhost:5000/getgeofiles");
-    fileData = await response.json();
-    console.log("___________________________" + JSON.stringify(fileData, null, 2));
+async function fetchGeoJSONFiles() {
+    
+    try {
+        const response = await fetch("http://localhost:5030/getgeofiles");
+        if(!response.ok) {
+            throw new Error(`Error: $)response.statusText`);
+        }
+        fileData = await response.json();
+    console.log("___________________________\nFile List: " + JSON.stringify(fileData, null, 2));
+    } catch (error) {
+        console.error("Failed to fetch file list:", error);
+    }
     return fileData;
 }
 
 function showGeoJSONFiles(filePaths) {
     filePaths.forEach(path => {
       fetch(path)
-        .then(response => response.json())
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(`HTTP error.  status: ${response.status}`);
+            }
+            return response.json()
+        })
         .then(data => {
           // Add each GeoJSON file as a layer to the map
           L.geoJSON(data).addTo(map);
