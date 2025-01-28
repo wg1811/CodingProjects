@@ -21,12 +21,18 @@ namespace Hangman1
             List<char> foundLetters = new List<char>(new string('-', secretWord.Length));
             // console out foundletters array
             Console.WriteLine(string.Join(" ", foundLetters));
-            while (true)
+            //Creating endgame bool
+            bool isPlaying = true;
+            string userLettersGuessed = "";
+            while (isPlaying)
             {
                 Console.WriteLine("Enter a letter");
                 char userInput = char.ToUpper(Console.ReadKey().KeyChar);
+                userLettersGuessed += userInput + " ";
 
-                Console.WriteLine("user input is " + userInput);
+                Console.WriteLine(
+                    "\n You entered " + userInput + "\nYour guesses so far: " + userLettersGuessed
+                );
                 int counter = 0;
 
                 // to compare my char with secret word char
@@ -39,11 +45,22 @@ namespace Hangman1
                     }
                     counter++;
                 }
-
+                //reset guess each time
+                string userAnswerGuessed = "";
+                foreach (char letter in foundLetters)
+                {
+                    userAnswerGuessed += letter;
+                }
+               
+                if (new string(userAnswerGuessed) == new string(secretWord.Trim()))
+                {
+                    Console.WriteLine("You guessed right! The word was " + userAnswerGuessed + "!");
+                    break;
+                }
                 // console out foundletters array
                 Console.WriteLine(string.Join(" ", foundLetters));
                 userRound--;
-                Console.WriteLine(userRound);
+                Console.WriteLine("You have " + userRound + " guesses left.");
                 if (userRound == 0)
                 {
                     Console.WriteLine("Game Over");

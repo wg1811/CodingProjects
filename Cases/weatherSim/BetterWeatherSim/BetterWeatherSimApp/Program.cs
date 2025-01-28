@@ -3,7 +3,6 @@ using BetterWeatherSimApp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services for OpenAPI
