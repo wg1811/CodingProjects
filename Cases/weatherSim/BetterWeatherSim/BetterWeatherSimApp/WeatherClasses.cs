@@ -121,33 +121,8 @@ namespace BetterWeatherSimApp
             }
         }
     }
-
-    public class GeoJSONManager
-    {
-        private readonly string folderPath;
-
-        public GeoJSONManager()
-        {
-            Console.WriteLine("This is before Path.Combine blah blah");
-            folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data");
-            Console.WriteLine("This is the folder path: " + folderPath);
-        }
-
-        public List<object> LoadGeoFiles()
-        {
-            string[] geoFiles = Directory.GetFiles(folderPath, "*.geojson");
-
-            List<object> geoData = new();
-
-            foreach (string file in geoFiles)
-            {
-                Console.WriteLine(file);
-                geoData.Add(file);
-            }
-            return geoData;
-        }
-    }
 }
+
 
 // Rainfall categories (double check. from Bhutan):
 // No rain Rainfall amount realised in a day is 0.0 mm

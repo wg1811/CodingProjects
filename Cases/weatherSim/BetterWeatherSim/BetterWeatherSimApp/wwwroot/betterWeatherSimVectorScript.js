@@ -2,35 +2,45 @@
 const size = 700;
 const myCanvas = document.getElementById("myCanvas");
 
-const worldMap = new Image();
-worldMap.src = "./ShadedWorldMap.png";
+// Map image not necessary cuz vectors.
+//const worldMap = new Image();
+//worldMap.src = "./ShadedWorldMap.png";
 
 const ctx = myCanvas.getContext("2d");
+const map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates and zoom level
 
-// Declaring avariables needed 'globally'.  
+// Declaring variables needed 'globally'.  
 let weatherData = [];
+let fileData = [];
 let weatherSystem = [];
 let dayLength = 50000;
 // Want to show individual weather instance data
 let currentWeatherId = 0;
 
-worldMap.onload = function () {
-    const aspectRatio = worldMap.width / worldMap.height;
-    const canvasWidth = size;
-    const canvasHeight = canvasWidth / aspectRatio;
-    myCanvas.width = canvasWidth;
-    myCanvas.height = canvasHeight;
-    ctx.drawImage(worldMap, 0, 0, canvasWidth, canvasHeight);
-    console.log("Image loaded and drawn.");
-    try {
-        animate();
-    } catch (error) {
-        console.error("Error during animation:", error);
-    }};  
+// Get all GeoJSON files into an array
+const allGeoJSON = fetchGeoJSONFiles();
+
+console.log(allGeoJSON);
+
+
+  // Not using map image.  Need to figure out how to load vector map
+// worldMap.onload = function () {
+//     const aspectRatio = worldMap.width / worldMap.height;
+//     console.log(worldMap.width + " is the width. " + worldMap.height + " is the height.");
+//     const canvasWidth = size;
+//     const canvasHeight = canvasWidth / aspectRatio;
+//     myCanvas.width = canvasWidth;
+//     myCanvas.height = canvasHeight;
+//     ctx.drawImage(worldMap, 0, 0, myCanvas.width, myCanvas.height);
+//     animate();
+// }
+
+  
 
 document.getElementById("startButton").addEventListener("click", async () => {
     try{
-    await fetchWeather();
+    await Promise.all([fetchWeather(), fetchGeoJSONFiles()]);
+    showGeoJSONFiles(fileData);
     updateWeatherDisplay();
     } catch (error) {
         console.error("Error during initialization", error);
@@ -55,7 +65,7 @@ function animate() {
 }
 
 async function fetchWeather() {
-    const response = await fetch("http://localhost:5000/getweathersystem");
+    const response = await fetch("http://localhost:5030/getweathersystem");
     weatherData = await response.json();
     weatherSystem = weatherData.weatherList.map(data => new WeatherShape(
         data.id,
@@ -72,6 +82,37 @@ async function fetchWeather() {
     //console.log(JSON.stringify(weatherSystem, null, 2) + " is System. \nThis is the Data: " + JSON.stringify(weatherData, null, 2));
 }
 
+async function fetchGeoJSONFiles() {
+    
+    try {
+        const response = await fetch("http://localhost:5030/getgeofiles");
+        if(!response.ok) {
+            throw new Error(`Error: $)response.statusText`);
+        }
+        fileData = await response.json();
+    console.log("___________________________\nFile List: " + JSON.stringify(fileData, null, 2));
+    } catch (error) {
+        console.error("Failed to fetch file list:", error);
+    }
+    return fileData;
+}
+
+function showGeoJSONFiles(filePaths) {
+    filePaths.forEach(path => {
+      fetch(path)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(`HTTP error.  status: ${response.status}`);
+            }
+            return response.json()
+        })
+        .then(data => {
+          // Add each GeoJSON file as a layer to the map
+          L.geoJSON(data).addTo(map);
+        })
+        .catch(error => console.error('Error loading GeoJSON:', path, error));
+    });
+  }
 
 function updateWeatherDisplay() {
     //console.log("weatherData is a " + typeof(weatherData) + "weatherData:", JSON.stringify(weatherData, null, 2));
@@ -141,8 +182,6 @@ class WeatherShape {
         } else {
             console.error("Position is undefined or missing x/y:", this.position);
         }
-        if(this.id === currentWeatherId) {
-            updateCurrentPosition(this);
-        }
+        updateCurrentPosition(this);
     }
 }
