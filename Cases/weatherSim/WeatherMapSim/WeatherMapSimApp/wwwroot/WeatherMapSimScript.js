@@ -1,24 +1,84 @@
-// Making canvas
-const size = 700;
-const myCanvas = document.getElementById("myCanvas");
+// Making map
+async function initMap(lat = 40.7128, lng = -74.0060)
+{
+    try {
+        const { Map } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+        
+        const location = { 
+            lat: Number(lat), 
+            lng: Number(lng) 
+        };
 
-const worldMap = new Image();
-worldMap.src = "./ShadedWorldMap.png";
-
-let map;
-
-async function initMap() {
-  const { Map } = await google.maps.importLibrary("maps");
-
-  map = new Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8,
-  });
+        const map = new Map(document.getElementById("map"), {
+            zoom: 10,
+            center: location,
+            mapId: "2a605d50bf27c0dc"
+        });
+        
+        new AdvancedMarkerElement({
+            position: location,
+            map: map,
+        });
+    } catch (error) {
+        console.error("Error initializing map:", error);
+    }
 }
 
-initMap();
+// Fetch coordinates from the backend and initialize the map
+async function fetchAndShowMap(address) {
+    try {
+        const response = await fetch(`http://localhost:5236/api/getCoordinates?address=${encodeURIComponent(address)}`);
+        const data = await response.json();
 
-const ctx = myCanvas.getContext("2d");
+        if (data.lat && data.lng) {
+            await initMap(data.lat, data.lng);
+        } else {
+            console.error("Coordinates not found");
+        }
+    } catch (error) {
+        console.error("Error fetching coordinates:", error);
+    }
+}
+// Event listener for the address button
+document.getElementById("getAddressButton").addEventListener("click", async () => {
+    const address = document.getElementById("address").value;
+    await fetchAndShowMap(address);
+});
+
+// Making canvas
+window.onload = function () {
+
+    initMap();
+
+    let canvas = document.getElementById("myCanvas");
+    if (!canvas) {
+        console.error("Canvas element not found!");
+        return;
+    }
+
+    let ctx = canvas.getContext("2d");
+    if (!ctx) {
+        console.error("Could not get 2D context!");
+        return;
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    function resizeCanvas() {
+        let mapDiv = document.getElementById("map");
+        if (!mapDiv) {
+            console.error("Map element not found!");
+            return;
+        }
+
+        canvas.width = mapDiv.clientWidth;
+        canvas.height = mapDiv.clientHeight;
+    }
+
+    console.log("Canvas initialized successfully!");
+};
 
 // Declaring avariables needed 'globally'.  
 let weatherData = [];
@@ -27,23 +87,10 @@ let dayLength = 50000;
 // Want to show individual weather instance data
 let currentWeatherId = 0;
 
-worldMap.onload = function () {
-    const aspectRatio = worldMap.width / worldMap.height;
-    const canvasWidth = size;
-    const canvasHeight = canvasWidth / aspectRatio;
-    myCanvas.width = canvasWidth;
-    myCanvas.height = canvasHeight;
-    ctx.drawImage(worldMap, 0, 0, canvasWidth, canvasHeight);
-    console.log("Image loaded and drawn.");
-    try {
-        animate();
-    } catch (error) {
-        console.error("Error during animation:", error);
-    }};  
-
 document.getElementById("startButton").addEventListener("click", async () => {
     try{
     await fetchWeather();
+    animate();
     updateWeatherDisplay();
     } catch (error) {
         console.error("Error during initialization", error);
@@ -57,8 +104,11 @@ setInterval(fetchWeather, dayLength);
 
 //Functions
 function animate() {
+    if (myCanvas) {
+        console.error("Canvas element found in animate!");
+    }
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-    ctx.drawImage(worldMap, 0, 0, myCanvas.width, myCanvas.height);
+//    ctx.drawImage(worldMap, 0, 0, myCanvas.width, myCanvas.height);
 
     weatherSystem.forEach((shape) => {
         shape.move(ctx);
@@ -68,7 +118,7 @@ function animate() {
 }
 
 async function fetchWeather() {
-    const response = await fetch("http://localhost:5236/getweathersystem");
+    const response = await fetch("http://localhost:5236/api/getweathersystem");
     weatherData = await response.json();
     weatherSystem = weatherData.weatherList.map(data => new WeatherShape(
         data.id,

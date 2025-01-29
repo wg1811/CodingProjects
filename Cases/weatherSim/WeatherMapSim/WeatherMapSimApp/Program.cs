@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Adding Dependency Injection Singleton
+builder.Services.AddSingleton<HttpClient>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
@@ -33,7 +36,7 @@ app.UseStaticFiles();
 app.MapGet("/", () => "Hello World");
 
 app.MapGet(
-    "/getweather",
+    "/api/getweather",
     () =>
     {
         Weather weather = new Weather();
@@ -44,7 +47,7 @@ app.MapGet(
 );
 
 app.MapGet(
-    "/getweathersystem",
+    "/api/getweathersystem",
     () =>
     {
         WeatherSystem weatherSystem = new WeatherSystem();
@@ -59,7 +62,7 @@ app.MapGet(
     "/api/getCoordinates",
     async (string address, HttpClient httpClient) =>
     {
-        var apiKey = "YOUR_GOOGLE_MAPS_API_KEY"; // Your Google Maps API Key
+        var apiKey = "AIzaSyA-*******API KEY************"; // Your Google Maps API Key
         var url =
             $"https://maps.googleapis.com/maps/api/geocode/json?address={Uri.EscapeDataString(address)}&key={apiKey}";
         var response = await httpClient.GetAsync(url);

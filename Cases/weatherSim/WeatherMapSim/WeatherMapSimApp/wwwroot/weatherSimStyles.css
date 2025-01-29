@@ -1,6 +1,14 @@
+#map-container {
+    position: relative;
+    width: 200vw;
+    height: 100vh;
+}
+
+/* The Google Map */
 #map {
+    width: 100%;
     height: 100%;
-  }
+}
   /* General body styling */
 body {
     font-family: Arial, sans-serif;
@@ -44,16 +52,15 @@ h1 {
 
 /* Canvas styling */
 #myCanvas {
-    border: 2px solid #333;
-    border-radius: 8px;
-    background-color: #dcdcdc;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    /* width: 80%;
-    max-width: 800px;
-    height: 400px; Set the height explicitly */
-    margin: 20px auto;
-    display: block;
-    pointer-events: auto; /* Enable interactivity if needed */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none; 
+    background-color: transparent;
+    box-shadow: none; 
+    pointer-events: none;
 }
 
 /* Button styling */
