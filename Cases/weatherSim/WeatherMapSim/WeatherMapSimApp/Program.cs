@@ -2,10 +2,14 @@ using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WeatherMapSimApp;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddUserSecrets<Program>();
+
+var apiMapKey = builder.Configuration["GoogleMaps:ApiKey"];
 
 // Add services for OpenAPI
 builder.Services.AddEndpointsApiExplorer();
@@ -57,12 +61,21 @@ app.MapGet(
     }
 );
 
+app.MapGet(
+    "/api/getMapsApiKey",
+    (IConfiguration config) =>
+    {
+        var apiKey = config["GoogleMaps:ApiKey"];
+        return Results.Json(new { apiKey });
+    }
+);
+
 // Define the minimal API route
 app.MapGet(
     "/api/getCoordinates",
     async (string address, HttpClient httpClient) =>
     {
-        var apiKey = "AIzaSyA-*******API KEY************"; // Your Google Maps API Key
+        var apiKey = apiMapKey; // Your Google Maps API Key
         var url =
             $"https://maps.googleapis.com/maps/api/geocode/json?address={Uri.EscapeDataString(address)}&key={apiKey}";
         var response = await httpClient.GetAsync(url);

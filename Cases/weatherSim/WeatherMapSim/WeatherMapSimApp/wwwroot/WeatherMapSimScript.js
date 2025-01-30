@@ -1,4 +1,7 @@
 // Making map
+let myCanvas;
+let ctx;
+
 async function initMap(lat = 40.7128, lng = -74.0060)
 {
     try {
@@ -47,17 +50,18 @@ document.getElementById("getAddressButton").addEventListener("click", async () =
 });
 
 // Making canvas
-window.onload = function () {
+window.onload = async function () {
+try{
+    await loadGoogleMaps();
+    console.log("Google Maps loaded", google); 
+    console.log("Google Maps loaded", window.google);  // Check if google is defined
 
     initMap();
 
-    let canvas = document.getElementById("myCanvas");
-    if (!canvas) {
-        console.error("Canvas element not found!");
-        return;
-    }
 
-    let ctx = canvas.getContext("2d");
+    myCanvas = document.getElementById("myCanvas");
+
+    ctx = myCanvas.getContext("2d");
     if (!ctx) {
         console.error("Could not get 2D context!");
         return;
@@ -73,11 +77,14 @@ window.onload = function () {
             return;
         }
 
-        canvas.width = mapDiv.clientWidth;
-        canvas.height = mapDiv.clientHeight;
+        myCanvas.width = mapDiv.clientWidth;
+        myCanvas.height = mapDiv.clientHeight;
     }
 
     console.log("Canvas initialized successfully!");
+} catch (error) {
+    console.error("Error loading Google Maps:", error);
+} 
 };
 
 // Declaring avariables needed 'globally'.  
@@ -87,7 +94,7 @@ let dayLength = 50000;
 // Want to show individual weather instance data
 let currentWeatherId = 0;
 
-document.getElementById("startButton").addEventListener("click", async () => {
+document.getElementById("getWeather").addEventListener("click", async () => {
     try{
     await fetchWeather();
     animate();
@@ -104,11 +111,7 @@ setInterval(fetchWeather, dayLength);
 
 //Functions
 function animate() {
-    if (myCanvas) {
-        console.error("Canvas element found in animate!");
-    }
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-//    ctx.drawImage(worldMap, 0, 0, myCanvas.width, myCanvas.height);
 
     weatherSystem.forEach((shape) => {
         shape.move(ctx);
