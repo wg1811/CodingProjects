@@ -1,126 +1,54 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using OpenMeteo;
 
-namespace WeatherMapSimApp
+namespace WeatherHistoryApp
 {
-    class Weather
+    class WeatherData
     {
         public int Id { get; set; }
-        public double Temp { get; set; } // -90 to 60 °C
-        public double AtmPressure { get; set; } // 870 to 1085 hPa (hectopascals)
-        public double Humidity { get; set; } // 0 to 100%
-        public double WindSpeed { get; set; } // 0 to 120m/s (record is 113m/s)
-        public double WindDirection { get; set; } // 0 to 360°
-        public double Precipitation { get; set; } // 0 to 2000mm
-        public double Cloudiness { get; set; } // 0 to 100%
-        public Position? WeatherPosition { get; set; }
-        public double Size { get; set; }
-
-        public class Position
-        {
-            public double Lat { get; set; }
-            public double Long { get; set; }
-        }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public Dictionary<string, List<double>> Hourly { get; set; }
+        public Dictionary<string, double> Daily { get; set; }
 
         // Empty constructor. Will make GetWeather()
-        public Weather() { }
-
-        // Initialize Random
-        static Random random = new Random();
-
-        // Creating Weather
-        public Weather GetWeather(int i) // Do I want to return weather (return this;) so I can chain methods?
-        {
-            this.Id = i;
-            double minTemp = -90;
-            double regMinTemp = -10;
-            double maxTemp = 60;
-            double regMaxTemp = 30;
-            double extremeRandom = random.NextDouble();
-
-            // Weighted temp so usually not insane.
-            if (extremeRandom > .8)
-            {
-                this.Temp = Math.Round(regMinTemp + extremeRandom * (regMaxTemp - regMinTemp), 2);
-            }
-            else
-            {
-                this.Temp = Math.Round(minTemp + extremeRandom * (maxTemp - minTemp), 2);
-            }
-            double minAtm = 870;
-            double maxAtm = 1085;
-            this.AtmPressure = Math.Round(minAtm + random.NextDouble() * (maxAtm - minAtm), 2);
-            this.Humidity = random.Next(101);
-
-            // Weighted windspeed
-            this.WindSpeed = (extremeRandom >= .8) ? random.Next(51, 121) : random.Next(51);
-            this.WindDirection = random.Next(360);
-            this.Cloudiness = random.Next(101);
-
-            //Weighted precipitation connected to cloudiness
-            if (this.Cloudiness > 30)
-            {
-                this.Precipitation =
-                    (extremeRandom >= .8) ? random.Next(150, 2001) : random.Next(201);
-            }
-            this.WeatherPosition = GetPosition();
-            this.Size = (extremeRandom >= .8) ? random.Next(80, 300) : random.Next(10, 80);
-            return this;
-        }
-
-        // Should get canvas size from client side. Make endpoint and send via js?
-        public static Position GetPosition()
-        {
-            Position position = new Position();
-            position.Lat = random.Next(701);
-            position.Long = random.Next(701);
-            return position;
-        }
-
-        public override string ToString()
-        {
-            return $"Id: {this.Id}, Temp: {this.Temp}, AtmPressure: {this.AtmPressure}, Humidity: {this.Humidity}, \n"
-                + $"WindSpeed: {this.WindSpeed}, WindDirection: {this.WindDirection}, Precipitation: {this.Precipitation}, \n"
-                + $"Cloudiness: {this.Cloudiness}, Position: ({this.WeatherPosition?.Lat}, {this.WeatherPosition?.Long}), Size: {this.Size}";
-        }
+        public WeatherData() { }
     }
-
-    class WeatherSystem
+        
+    class WeatherService
     {
-        public List<Weather>? WeatherList { get; set; }
+        private readonly OpenMeteoClient _client = new OpenMeteoClient();
 
-        public WeatherSystem()
+        public async Task<WeatherData?> GetHistoricalWeather(double lat, double long, string date)
         {
-            WeatherList = new List<Weather>();
-        }
+            var request = new WeatherForcastRequest
+            {
+                Latitude = lat,
+                Longitute = long,
+                StartDate = DateTime.Parse(date),
+                EndDate = DateTime.Parse(date),
+                Hourly = new[]
+                {
+                     "temperature_2m", "relative_humidity_2m", "dewpoint_2m", "apparent_temperature",
+            "precipitation", "rain", "snowfall", "snow_depth", "weathercode", "cloudcover",
+            "cloudcover_low", "cloudcover_mid", "cloudcover_high", "windspeed_10m",
+            "windspeed_80m", "windspeed_120m", "windspeed_180m", "winddirection_10m",
+            "winddirection_80m", "winddirection_120m", "winddirection_180m", "shortwave_radiation",
+            "direct_radiation", "direct_normal_irradiance", "diffuse_radiation", "vapour_pressure_deficit",
+            "surface_pressure", "evapotranspiration", "soil_temperature_0cm", "soil_moisture_0_1cm"
+                },
 
-        public WeatherSystem CreateWeatherSystem()
+        Daily = new[]
         {
-            int numWeather = 10;
-            for (int i = 0; i < numWeather; i++)
-            {
-                Weather weather = new Weather();
-                weather.GetWeather(i);
-                weather.ToString();
-                this.WeatherList?.Add(weather);
-            }
-            return this;
-        }
-
-        public void ConsoleWeatherList()
-        {
-            if (this.WeatherList == null || this.WeatherList.Count == 0)
-            {
-                Console.WriteLine("No weather data available.");
-                return;
-            }
-            foreach (var weather in WeatherList)
-            {
-                Console.WriteLine(weather.ToString());
+            "temperature_2m_max", "temperature_2m_min", "apparent_temperature_max", "apparent_temperature_min",
+            "precipitation_sum", "rain_sum", "snowfall_sum", "precipitation_hours", "windspeed_10m_max",
+            "windgusts_10m_max", "winddirection_10m_dominant", "shortwave_radiation_sum", "weathercode"
+        },
             }
         }
-    }
+    
 }
 
 

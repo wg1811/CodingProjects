@@ -4,7 +4,9 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WeatherMapSimApp;
+using WeatherHistoryApp;
+using OpenMeteo;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddUserSecrets<Program>();
@@ -40,24 +42,16 @@ app.UseStaticFiles();
 app.MapGet("/", () => "Hello World");
 
 app.MapGet(
-    "/api/getweather",
-    () =>
+    "/api/getweather", async (double userLat, double userLong) =>
     {
-        Weather weather = new Weather();
-        weather.GetWeather(0); // Need to get last id and feed it here.
-        Console.WriteLine(weather.ToString());
-        return Results.Ok();
-    }
-);
+        var client = new OpenMeteoClient();
 
-app.MapGet(
-    "/api/getweathersystem",
-    () =>
-    {
-        WeatherSystem weatherSystem = new WeatherSystem();
-        weatherSystem.CreateWeatherSystem();
-        //weatherSystem.ConsoleWeatherList();
-        return Results.Ok(weatherSystem);
+        var request = new WeatherForecastRequest;
+        {
+            Latitude = userLat;
+            Longitute = userLong;
+        }
+
     }
 );
 
