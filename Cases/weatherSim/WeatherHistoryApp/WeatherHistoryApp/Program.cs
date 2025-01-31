@@ -5,17 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WeatherHistoryApp;
-using OpenMeteo;
-
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddUserSecrets<Program>();
 
 var apiMapKey = builder.Configuration["GoogleMaps:ApiKey"];
 
-// Add services for OpenAPI
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Add services for OpenAPI :  Don't need this yet.
+// builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddSwaggerGen();
 
 // Adding Dependency Injection Singleton
 builder.Services.AddSingleton<HttpClient>();
@@ -35,23 +33,26 @@ var app = builder.Build();
 app.UseCors("AllowAllOrigins");
 
 // Enable Swagger middleware
-app.UseSwagger();
-app.UseSwaggerUI();
+// app.UseSwagger();
+// app.UseSwaggerUI();
 app.UseStaticFiles();
 
 app.MapGet("/", () => "Hello World");
 
 app.MapGet(
-    "/api/getweather", async (double userLat, double userLong) =>
+    "/api/getweather",
+    async (double userLat, double userLong, string start_date, string end_date) =>
     {
-        var client = new OpenMeteoClient();
-
-        var request = new WeatherForecastRequest;
-        {
-            Latitude = userLat;
-            Longitute = userLong;
-        }
-
+        WeatherService weatherService = new();
+        var weather = await weatherService.GetHistoricalWeather(
+            userLat,
+            userLong,
+            start_date,
+            end_date
+        );
+        return weather != null
+            ? Results.Json(weather)
+            : Results.Problem("Weather data not fetched.");
     }
 );
 

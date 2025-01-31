@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using OpenMeteo;
 
 namespace WeatherHistoryApp
 {
@@ -10,45 +9,50 @@ namespace WeatherHistoryApp
         public int Id { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public Dictionary<string, List<double>> Hourly { get; set; }
-        public Dictionary<string, double> Daily { get; set; }
+        public Dictionary<string, List<double>> Hourly { get; set; } = new();
+        public Dictionary<string, double> Daily { get; set; } = new();
 
         // Empty constructor. Will make GetWeather()
         public WeatherData() { }
     }
-        
+
     class WeatherService
     {
-        private readonly OpenMeteoClient _client = new OpenMeteoClient();
-
-        public async Task<WeatherData?> GetHistoricalWeather(double lat, double long, string date)
+        public async Task<string?> GetHistoricalWeather(
+            double lat,
+            double lng,
+            string startDate,
+            string endDate
+        )
         {
-            var request = new WeatherForcastRequest
+            try
             {
-                Latitude = lat,
-                Longitute = long,
-                StartDate = DateTime.Parse(date),
-                EndDate = DateTime.Parse(date),
-                Hourly = new[]
-                {
-                     "temperature_2m", "relative_humidity_2m", "dewpoint_2m", "apparent_temperature",
-            "precipitation", "rain", "snowfall", "snow_depth", "weathercode", "cloudcover",
-            "cloudcover_low", "cloudcover_mid", "cloudcover_high", "windspeed_10m",
-            "windspeed_80m", "windspeed_120m", "windspeed_180m", "winddirection_10m",
-            "winddirection_80m", "winddirection_120m", "winddirection_180m", "shortwave_radiation",
-            "direct_radiation", "direct_normal_irradiance", "diffuse_radiation", "vapour_pressure_deficit",
-            "surface_pressure", "evapotranspiration", "soil_temperature_0cm", "soil_moisture_0_1cm"
-                },
+                using var client = new HttpClient();
+                var WeatherUrl =
+                    $"https://archive-api.open-meteo.com/v1/archive?latitude={lat}&longitude={lng}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&start_date={startDate}&end_date={endDate}";
+                var response = await client.GetAsync(WeatherUrl);
 
-        Daily = new[]
-        {
-            "temperature_2m_max", "temperature_2m_min", "apparent_temperature_max", "apparent_temperature_min",
-            "precipitation_sum", "rain_sum", "snowfall_sum", "precipitation_hours", "windspeed_10m_max",
-            "windgusts_10m_max", "winddirection_10m_dominant", "shortwave_radiation_sum", "weathercode"
-        },
+                Console.WriteLine($"Is this not working... Status code: {response.StatusCode}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    Console.WriteLine(
+                        $"Nope. Didn't work to get weather apis. Status code: {response.StatusCode}"
+                    );
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
             }
         }
-    
+    }
 }
 
 

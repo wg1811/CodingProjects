@@ -2,6 +2,7 @@
 let myCanvas;
 let ctx;
 
+// Map Functions
 async function initMap(lat = 40.7128, lng = -74.006) {
   try {
     const { Map } = await google.maps.importLibrary("maps");
@@ -27,8 +28,39 @@ async function initMap(lat = 40.7128, lng = -74.006) {
   }
 }
 
-// Fetch coordinates from the backend and initialize the map
-async function fetchAndShowMap(address) {
+// Fetch Map coordinates and get Weather
+// Helper functions to set the default dates to 10 and 3 days ago and format to YYYY-MM-DD
+function getFormattedStartDate() {
+  const today = new Date();
+  const startDate = new Date(today);
+  startDate.setDate(today.getDate() - 10); // 10 days ago
+
+  const year = startDate.getFullYear();
+  const month = (startDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = startDate.getDate().toString().padStart(2, "0");
+
+  console.log(`${year}-${month}-${day} is the start date (10 days ago).`);
+  return `${year}-${month}-${day}`;
+}
+
+function getFormattedEndDate() {
+  const today = new Date();
+  const endDate = new Date(today);
+  endDate.setDate(today.getDate() - 3); // 3 days ago
+
+  const year = endDate.getFullYear();
+  const month = (endDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = endDate.getDate().toString().padStart(2, "0");
+
+  console.log(`${year}-${month}-${day} is the end date (3 days ago).`);
+  return `${year}-${month}-${day}`;
+}
+//
+async function fetchAndShowMapWeather(
+  address,
+  start_date = getFormattedStartDate(),
+  end_date = getFormattedEndDate()
+) {
   try {
     const response = await fetch(
       `http://localhost:5000/api/getCoordinates?address=${encodeURIComponent(
@@ -36,25 +68,30 @@ async function fetchAndShowMap(address) {
       )}`
     );
     const data = await response.json();
+    const lat = data.lat;
+    const long = data.long;
 
-    if (data.lat && data.lng) {
-      await initMap(data.lat, data.lng);
+    if (lat && long) {
+      await initMap(lat, long);
     } else {
       console.error("Coordinates not found");
     }
   } catch (error) {
     console.error("Error fetching coordinates:", error);
   }
+  fetchWeather(lat, long, start_date, end_date);
 }
+
+// Start of Map stuff
 // Event listener for the address button
 document
   .getElementById("getAddressButton")
   .addEventListener("click", async () => {
     const address = document.getElementById("address").value;
-    await fetchAndShowMap(address);
+    await fetchAndShowMapWeather(address);
   });
 
-// Making canvas
+// Loading map and canvas
 window.onload = async function () {
   try {
     await loadGoogleMaps();
@@ -90,68 +127,35 @@ window.onload = async function () {
     console.error("Error loading Google Maps:", error);
   }
 };
+// End of onload
 
-// Declaring avariables needed 'globally'.
-let weatherData = [];
-let weatherSystem = [];
-let dayLength = 50000;
-// Want to show individual weather instance data
-let currentWeatherId = 0;
-
-document.getElementById("getWeather").addEventListener("click", async () => {
-  try {
-    await fetchWeather();
-    animate();
-    updateWeatherDisplay();
-  } catch (error) {
-    console.error("Error during initialization", error);
-  }
-});
-
-setInterval(fetchWeather, dayLength);
-
-//Functions
-function animate() {
-  ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-
-  weatherSystem.forEach((shape) => {
-    shape.move(ctx);
-    shape.draw(ctx);
+// Start of Weather functions
+document
+  .getElementById("getWeatherButton")
+  .addEventListener("click", async () => {
+    try {
+      await fetchWeather(); //  I have to create fields for this and change to submit, I think?
+      //animate(); Not ready for this step yet.
+      //updateWeatherDisplay(); Not updated with new structure
+    } catch (error) {
+      console.error("Error during initialization", error);
+    }
   });
-  requestAnimationFrame(animate);
-}
 
-async function fetchWeather() {
-  const response = await fetch("http://localhost:5000/api/getweathersystem");
-  weatherData = await response.json();
-  weatherSystem = weatherData.weatherList.map(
-    (data) =>
-      new WeatherShape(
-        data.id,
-        data.temp,
-        data.atmPressure,
-        data.humidity,
-        data.windSpeed,
-        data.windDirection,
-        data.precipitation,
-        data.cloudiness,
-        data.weatherPosition,
-        data.size
-      )
+// Calling this to get the weather in fetchAndShowMap
+async function fetchWeather(lat, long, start_date, end_date) {
+  const response = await fetch(
+    `http://localhost:5000/api/getweather?lat=${lat}&lon=${long}&start_date=${start_date}&end_date=${end_date}`
   );
-  //console.log(JSON.stringify(weatherSystem, null, 2) + " is System. \nThis is the Data: " + JSON.stringify(weatherData, null, 2));
+  const data = await response.json();
+  console.log("This is the Data: " + JSON.stringify(data, null, 2));
 }
+//console.log(JSON.stringify(weatherSystem, null, 2) + " is System. \nThis is the Data: " + JSON.stringify(weatherData, null, 2));
 
 function updateWeatherDisplay() {
   //console.log("weatherData is a " + typeof(weatherData) + "weatherData:", JSON.stringify(weatherData, null, 2));
   const weather = weatherData.weatherList.find(
     (item) => item.id === currentWeatherId
-  );
-  console.log(
-    "currentWeatherId = " +
-      currentWeatherId +
-      "\n..." +
-      JSON.stringify(weather, null, 2)
   );
   document.getElementById("temp").textContent = weather.temp;
   document.getElementById("atmPressure").textContent = weather.atmPressure;
@@ -165,25 +169,6 @@ function updateWeatherDisplay() {
   ).textContent = `${weather.weatherPosition.lat}, ${weather.weatherPosition.long}`;
   document.getElementById("size").textContent = weather.size;
   hightlightCurrent(weather);
-}
-
-document.getElementById("nextWeather").addEventListener("click", () => {
-  currentWeatherId = (currentWeatherId + 1) % weatherSystem.length;
-  updateWeatherDisplay();
-});
-
-// I want the current weather displayed to be highlighted
-function hightlightCurrent(weather) {
-  weather.color = `rgba(43, 9, 194, 0.93)`;
-  //console.log(weather.color + " is the highlighted color");
-}
-
-function updateCurrentPosition(weather) {
-  document.getElementById(
-    "position"
-  ).textContent = `${weather.weatherPosition.lat.toFixed(
-    2
-  )}, ${weather.weatherPosition.long.toFixed(2)}`;
 }
 
 // The weather will be drawn as a circle of a particular radius, color and speed
@@ -216,47 +201,5 @@ class WeatherShape {
       1 - windSpeed / 100,
       0.4
     )})`;
-  }
-
-  draw(ctx) {
-    ctx.fillStyle =
-      this.id === currentWeatherId ? "rgba(43, 9, 194, 0.93)" : this.color;
-    ctx.beginPath();
-    ctx.arc(
-      this.weatherPosition.lat,
-      this.weatherPosition.long,
-      this.size,
-      0,
-      Math.PI * 2
-    );
-    ctx.fill();
-    ctx.closePath();
-  }
-
-  move(ctx) {
-    if (
-      this.weatherPosition &&
-      this.weatherPosition.lat !== undefined &&
-      this.weatherPosition.long !== undefined
-    ) {
-      this.weatherPosition.lat +=
-        Math.sin(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 100);
-      this.weatherPosition.long -=
-        Math.cos(this.windDirection * (Math.PI / 180)) * (this.windSpeed / 100);
-      //This is to wrap around the canvas for a global map
-      if (this.weatherPosition.lat > ctx.canvas.width)
-        this.weatherPosition.lat = 0;
-      if (this.weatherPosition.long > ctx.canvas.height)
-        this.weatherPosition.long = 0;
-      if (this.weatherPosition.lat < 0)
-        this.weatherPosition.lat = ctx.canvas.width;
-      if (this.weatherPosition.long < 0)
-        this.weatherPosition.long = ctx.canvas.height;
-    } else {
-      console.error("Position is undefined or missing x/y:", this.position);
-    }
-    if (this.id === currentWeatherId) {
-      updateCurrentPosition(this);
-    }
   }
 }
