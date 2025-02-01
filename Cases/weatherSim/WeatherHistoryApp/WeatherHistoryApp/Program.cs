@@ -41,15 +41,25 @@ app.MapGet("/", () => "Hello World");
 
 app.MapGet(
     "/api/getweather",
-    async (double userLat, double userLong, string start_date, string end_date) =>
+    async (double lat, double lon, string start_date, string end_date) =>
+    {
+        // Console.WriteLine(
+        //     $"The lat is {lat}, the long is {lon}.\nThe start date is {start_date}, the end date is {end_date}."
+        // );
+        WeatherService weatherService = new();
+        var weather = await weatherService.GetHistoricalWeather(lat, lon, start_date, end_date);
+        return weather != null
+            ? Results.Json(weather)
+            : Results.Problem("Weather data not fetched.");
+    }
+);
+
+app.MapGet(
+    "/api/testweather",
+    async (double lat, double lon, string start_date, string end_date) =>
     {
         WeatherService weatherService = new();
-        var weather = await weatherService.GetHistoricalWeather(
-            userLat,
-            userLong,
-            start_date,
-            end_date
-        );
+        var weather = await weatherService.TestWeather(lat, lon, start_date, end_date);
         return weather != null
             ? Results.Json(weather)
             : Results.Problem("Weather data not fetched.");
