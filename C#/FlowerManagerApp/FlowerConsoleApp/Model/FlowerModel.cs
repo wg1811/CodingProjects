@@ -1,4 +1,3 @@
-
 namespace FlowerConsoleApp
 {
     public class Flower
@@ -8,6 +7,6 @@ namespace FlowerConsoleApp
         public string FlowerLatinName { get; set; } = "";
         public string FlowerWatering { get; set; } = "";
         public string FlowerSunlight { get; set; } = "";
-        public string FlowerImage { get; set; } = "";  // There is probably an image class I should use or make?
+        public string FlowerImage { get; set; } = ""; // There is probably an image class I should use or make?
     }
 }
