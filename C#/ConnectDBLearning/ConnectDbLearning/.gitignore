@@ -1,0 +1,26 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Entity Framework migrations
+Migrations/
+
+# Local database files
+*.mdf
+*.ldf
+*.sqlite
+
+# ASP.NET Core
+appsettings.Development.json
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Windows Installer files
+Thumbs.db
+Desktop.ini

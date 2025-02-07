@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialog Example</title>
+    <style>
+        dialog {
+            padding: 20px;
+            border-radius: 5px;
+        }
+        #openDialog2:hover {
+        color: #ffcc00; 
+        transform: scale(1.2); 
+    }
+    </style>
+</head>
+<body>
+
+    <button id="openDialog1">Enter Name and Age</button>
+    <button id="openDialog2"><img src="./media/Smiley.svg.png" alt="Smiley face" width="30">
+    </button>
+
+    <dialog id="dialog1">
+        <form method="dialog">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required><br><br>
+            <label for="age">Age:</label>
+            <input type="number" id="age" required><br><br>
+            <button type="submit" id="submitForm">Submit</button>
+            <button type="button" id="closeDialog1">Close</button>
+        </form>
+    </dialog>
+
+    <dialog id="dialog2">
+        <p id="joke"></p>
+        <button type="button" id="closeDialog2">Close</button>
+    </dialog>
+
+    <script>
+        document.getElementById("openDialog1").addEventListener("click", function() {
+            document.getElementById("dialog1").showModal();
+        });
+        
+
+        document.getElementById("openDialog2").addEventListener("click", function() {
+            fetch('https://official-joke-api.appspot.com/random_joke')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("joke").textContent = data.setup + " - " + data.punchline;
+                    document.getElementById("dialog2").showModal();
+                })
+                .catch(error => console.error('Error fetching joke:', error));
+        });
+
+        document.getElementById("submitForm").addEventListener("click", function() {
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            console.log(`Name: ${name}, Age: ${age}`);
+            document.getElementById("dialog1").close();
+        });
+
+        document.getElementById("closeDialog1").addEventListener("click", function() {
+            document.getElementById("dialog1").close();
+        });
+
+        document.getElementById("closeDialog2").addEventListener("click", function() {
+            document.getElementById("dialog2").close();
+        });
+    </script>
+</body>
+</html>

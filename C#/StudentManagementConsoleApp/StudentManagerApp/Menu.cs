@@ -28,8 +28,8 @@
                 switch (userInput)
                 {
                     case "1":
-                        //studentController.ShowStudent();
-                        Console.WriteLine("needs debug");
+                        studentController.ShowStudent();
+                        //Console.WriteLine("needs debug");
                         break;
                     case "2":
                         studentController.ShowStudents();
@@ -38,8 +38,8 @@
                         studentController.AddStudent();
                         break;
                     case "4":
-                        //studentController.UpdateStudent();
-                        Console.WriteLine("need debug");
+                        studentController.UpdateStudent();
+                        //Console.WriteLine("need debug");
                         break;
                     case "5":
                         studentController.DeleteStudent();
