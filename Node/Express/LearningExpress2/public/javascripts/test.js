@@ -1,0 +1,1 @@
+console.log("This is in the javascripts folder in the test.js file");

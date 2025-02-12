@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <script src="/javascripts/test.js"></script>
+  <script>
+    async function getUser() {
+      const response = await fetch("http://localhost:3000/auth");
+      const data = await response.text();
+      console.log(data);
+    }
+    getUser();
+  </script>
+  </body>
+</html>
