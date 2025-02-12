@@ -1,0 +1,58 @@
+# Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+*.vscode/
+*.cache
+
+# Ignore build outputs
+bin/
+obj/
+*.dll
+*.exe
+*.log
+*.pdb
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore dependencies (use `dotnet restore` to reinstall)
+packages/
+node_modules/
+wwwroot/lib/
+
+# Ignore sensitive configuration
+appsettings.*.json
+secrets.json
+.env
+
+# Ignore database files
+*.mdf
+*.ldf
+sqlite.db
+*.bak
+*.sql
+
+# Ignore compiled Razor views
+**/obj/**/Razor/
+**/obj/**/RazorDeclaration/
+
+# Ignore JetBrains Rider / ReSharper
+.idea/
+*.DotSettings.user
+
+# Ignore NuGet Packages
+**/packages/
+*.nupkg
+project.lock.json
+
+# Ignore Azure related files
+.azure/
+
+# Keep EF Core Migrations but EXCLUDE InitialCreate
+Migrations/
+!Migrations/*.cs
+!Migrations/*.Designer.cs
+!Migrations/*.snapshot
+Migrations/InitialCreate*
