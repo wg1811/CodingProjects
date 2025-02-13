@@ -1,0 +1,17 @@
+{
+  "name": "learningexpress3",
+  "version": "1.0.0",
+  "description": "Still learning",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "author": "Wesley George",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.2",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  }
+}

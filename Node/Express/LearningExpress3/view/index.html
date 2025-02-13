@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" src="./styles/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>World, are you even listening?</h1>
+    <h1>Hello?</h1>
+    <form name="calculater-form" method="post">
+        <input type="number" id="num1" name="num1"><br>
+        <input type="number" id="num2" name="num2"><br><br>
+        <button id="send-data" type="submit">Add</button>
+
+    </form>
+    <h3 id="result-field">Answer: </h3>
+    <script>
+        document.getElementById("calculater-form").addEventListener("submit", (e) => {
+            e.defaultPrevented();
+            const num1 = document.getElementById("num1").value;
+            const num2 = document.getElementById("num2").value;
+            fetch("http://localhost:5000/sumnums", {
+                headers: {
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({
+                    num1:num1,
+                    num2:num2
+                })
+                .then((response) => {
+                    if(!response.ok) {
+                        throw new Error("Failed to fetch")
+                    }
+                    })
+                    .then((data) => {
+                        console.log(data);
+                        document.getElementById("result-field").innerText = `Answer: ${data.result}`;
+                    })
+                    .catch((error) => {
+                        console.error("error", error);
+                    })
+                })
+            })
+    </script>
+</body>
+</html>
