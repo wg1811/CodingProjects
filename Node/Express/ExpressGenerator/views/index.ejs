@@ -3,10 +3,38 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/bootstrap.min.css' />
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-    <h3> <%=people%> </h3>
-  </body>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Ages</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% people.forEach(person => {%>
+     <tr>
+      <td>
+        <%=person.name %>
+      </td>
+      <td>
+        <%=person.gender %>
+      </td>
+      <td>
+        <%=person.age %>
+      </td>
+      <td>
+        <%=person.location %>
+      </td>
+    </tr>  
+    <% }) %>
+  </tbody>
+
+</table>  </body>
 </html>
