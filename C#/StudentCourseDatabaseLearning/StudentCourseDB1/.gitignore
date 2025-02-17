@@ -1,0 +1,38 @@
+# Ignore build artifacts
+bin/
+obj/
+
+# User-specific files
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.sln.ide
+
+# Logs
+*.log
+Logs/
+
+# Environment settings
+.env
+appsettings.Development.json
+appsettings.Local.json
+
+# Database files
+*.mdf
+*.ldf
+*.sqlite
+
+# Entity Framework Migrations
+Migrations/
+
+# Rider and JetBrains
+.idea/
+*.iml
+
+# macOS & Linux system files
+.DS_Store
+*.swp
+*.swn
+*.swo
