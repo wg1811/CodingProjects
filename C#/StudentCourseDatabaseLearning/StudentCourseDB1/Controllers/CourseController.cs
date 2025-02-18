@@ -23,7 +23,7 @@ public class CourseController : ControllerBase
         return Ok(courses);
     }
 
-    [HttpPost("addnewcourse")]
+    [HttpPost("addcourse")]
     public async Task<ActionResult<Course>> AddCourse([FromBody] Course course)
     {
         var existedCourse = await _context.Courses.FirstOrDefaultAsync(c => c.Name == course.Name);
@@ -59,7 +59,7 @@ public class CourseController : ControllerBase
         if (existedCourse == null)
             return NotFound(new { Message = "Course does not exist" });
 
-        existedCourse.Name = updatedCourse.Name;
+        existedCourse.Name = updatedCourse.Name ?? existedCourse.Name;
         await _context.SaveChangesAsync();
         return Ok(new { Message = "Course Updated", Course = existedCourse });
     }

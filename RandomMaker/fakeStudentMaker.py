@@ -4,7 +4,10 @@ import random
 # Initialize Faker
 fake = Faker()
 
-def generate_fake_people(count=10):
+# How many?
+count = 100
+
+def generate_fake_people(count):
     """Generate a list of fake people with various attributes."""
     people = []
     
@@ -19,8 +22,9 @@ def generate_fake_people(count=10):
     return people
 
 # Generate 10 fake people
-fake_people = generate_fake_people(10)
+fake_people = generate_fake_people(count)
 
 # Print the results
 for person in fake_people:
-    print(person)
+    values = f"('{person['name']}', '{person['email']}', {person['age']}),"
+    print(values)
