@@ -10,7 +10,7 @@ public class Student
     public string Name { get; set; } = "";
 
     [Required]
-    public int Age { get; set; } = 0;
+    public int? Age { get; set; } = 0;
 
     [Required]
     public string Email { get; set; } = "";
