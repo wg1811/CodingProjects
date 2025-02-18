@@ -21,7 +21,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("getstudent/{id}")]
-    public async Task<ActionResult<IEnumerable<Student>>> GetStudent(int id)
+    public async Task<ActionResult<Student>> GetStudent(int id)
     {
         var student = await _context.Students.FindAsync(id);
         if (student == null)
@@ -82,16 +82,16 @@ public class StudentController : ControllerBase
         [FromBody] Student updatedStudent
     ) //  Include `id` from URL
     {
-        if (id != updatedStudent.Id) //  Ensure the ID in the URL matches the ID in the body
+        if (id != updatedStudent.Id)
             return BadRequest(new { Message = "ID mismatch between URL and body" });
 
         var existedStudent = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
         if (existedStudent == null)
             return NotFound(new { Message = "Student does not exist" });
 
-        existedStudent.Name = updatedStudent.Name;
-        existedStudent.Email = updatedStudent.Email;
-        existedStudent.Age = updatedStudent.Age;
+        existedStudent.Name = updatedStudent.Name ?? existedStudent.Name;
+        existedStudent.Email = updatedStudent.Email ?? existedStudent.Email;
+        existedStudent.Age = updatedStudent.Age ?? existedStudent.Age;
 
         await _context.SaveChangesAsync();
         return Ok(new { Message = "Student updated", Student = existedStudent });
