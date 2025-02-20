@@ -831,10 +831,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1365606168810038466, guid: 213263b267e1b0e4d818eea037a6223d, type: 3}
-      propertyPath: speed
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 2355159268645635713, guid: 213263b267e1b0e4d818eea037a6223d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5305433
@@ -932,10 +928,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4624986389566383608, guid: b8be0eac5064b244e95ab627647688c3, type: 3}
-      propertyPath: speed
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4901689082433227935, guid: b8be0eac5064b244e95ab627647688c3, type: 3}
       propertyPath: m_Name
       value: Dog_BullDog_01
@@ -955,7 +947,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1174054694575438372, guid: 022fd8aaca522df4cbddcf021d618d21, type: 3}
       propertyPath: m_Name
-      value: Food_Steak_01
+      value: Projectile
       objectReference: {fileID: 0}
     - target: {fileID: 7603385143828811793, guid: 022fd8aaca522df4cbddcf021d618d21, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1053,10 +1045,6 @@ PrefabInstance:
     - target: {fileID: 4434119633283969429, guid: f1b92b3bd6cfa9e4880381ac3d42f8f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010673966658017553, guid: f1b92b3bd6cfa9e4880381ac3d42f8f0, type: 3}
-      propertyPath: speed
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
