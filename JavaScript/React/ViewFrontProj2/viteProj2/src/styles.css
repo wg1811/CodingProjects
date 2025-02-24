@@ -1,0 +1,45 @@
+/* Global styles */
+* {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar styles */
+#navbar-group {
+  background-color: #333; /* Dark background */
+  padding: 10px 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar List */
+#navbar {
+  list-style: none;
+  display: flex;
+  justify-content: center; /* Center the navbar */
+  gap: 20px;
+}
+
+/* Navbar List Items */
+#navbar li {
+  display: inline;
+}
+
+/* Navbar Links */
+#navbar a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+/* Hover effect */
+#navbar a:hover {
+  background-color: #555;
+  color: #ffcc00;
+}
