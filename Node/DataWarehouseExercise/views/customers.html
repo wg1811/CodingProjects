@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Warehouse Customers</title>
+    <link rel="stylesheet" href="./styles/common.css" />
+  </head>
+  <body>
+    <div id="navbar">
+      <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./customers.html">Customers</a></li>
+        <li><a href="./products.html">Products</a></li>
+      </ul>
+    </div>
+    <h1>Customers</h1>
+    <div>
+      <button id="get-customers-btn" onclick="populateCustomerTable()">
+        Get Customers
+      </button>
+    </div>
+    <div id="customers-table-section">
+      <table id="customers-table">
+        <thead>
+          <tr>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Country</th>
+          </tr>
+        </thead>
+        <tbody id="customers-table-body">
+          <!-- Data will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+    <script src="./scripts/customerTable.js"></script>
+  </body>
+</html>
