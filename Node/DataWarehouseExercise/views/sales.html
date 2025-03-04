@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data Warehouse Products</title>
+    <title>Data Warehouse Sales</title>
     <link rel="stylesheet" href="./styles/common.css" />
   </head>
   <body>
@@ -12,31 +12,30 @@
         <li><a href="./">Home</a></li>
         <li><a href="./customers">Customers</a></li>
         <li><a href="./products">Products</a></li>
-        <li><a href="./sales">Sales</a></li>
       </ul>
     </div>
-    <h1>Products</h1>
+    <h1>Sales</h1>
     <div id="button-container">
-      <button id="get-products-btn" onclick="populateProductTable()">
-        Get Products
+      <button id="get-sales-btn" onclick="populateSalesTable()">
+        Get Sales
       </button>
     </div>
-    <div id="products-table-section">
-      <table id="products-table">
+    <div id="sales-table-section">
+      <table id="sales-table">
         <thead>
           <tr>
-            <th>Product ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
+            <th>Transaction ID</th>
+            <th>Product</th>
+            <th>Customer</th>
+            <th>Total</th>
             <th>Category</th>
           </tr>
         </thead>
-        <tbody id="products-table-body">
+        <tbody id="sales-table-body">
           <!-- Data will be inserted here -->
         </tbody>
       </table>
     </div>
-    <script src="./scripts/productTable.js"></script>
+    <script src="./scripts/salesTable.js"></script>
   </body>
 </html>

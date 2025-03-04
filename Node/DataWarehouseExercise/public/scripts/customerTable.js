@@ -6,7 +6,8 @@ async function populateCustomerTable() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(JSON.stringify(data));
+    //console.log(data);
+    //console.log(JSON.stringify(data));
     const results = data.data.results;
     const table = document.getElementById("customers-table-body");
     table.innerHTML = "";

@@ -84,3 +84,125 @@ h1 {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+#products-table-section {
+  margin: 20px auto;
+  width: 80%;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+#products-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#products-table th,
+#products-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+#products-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+#products-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#products-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+#products-table th:first-child,
+#products-table td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+#products-table th:last-child,
+#products-table td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+#button-container {
+  margin: 20px auto;
+  width: 80%;
+  text-align: left;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#sales-table-section {
+  margin: 20px auto;
+  width: 80%;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+#sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#sales-table th,
+#sales-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+#sales-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+#sales-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#sales-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+#sales-table th:first-child,
+#sales-table td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+#sales-table th:last-child,
+#sales-table td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}

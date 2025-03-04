@@ -6,7 +6,6 @@ const axios = require("axios");
 // Route to products
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../views/products.html"));
-  res.send(200).json({ statusCode: 200, message: "OK - products page" });
 });
 
 router.get("/getproducts", async (req, res) => {
@@ -14,7 +13,7 @@ router.get("/getproducts", async (req, res) => {
   try {
     const response = await axios.get(url);
     const data = response.data;
-    console.log(data);
+    //console.log(data);
     res.status(200).json({ statusCode: 200, message: "OK", data: data });
   } catch (error) {
     console.error(error);

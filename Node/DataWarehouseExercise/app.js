@@ -6,6 +6,7 @@ const cors = require("cors");
 const indexRouter = require("./routes/index");
 const productsRouter = require("./routes/products");
 const customersRouter = require("./routes/customers");
+const salesRouter = require("./routes/sales");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/products", productsRouter);
 app.use("/customers", customersRouter);
+app.use("/sales", salesRouter);
 
 //  Listen on port 3000
 app.listen(PORT, () => {

@@ -11,11 +11,11 @@ router.get("/", (req, res) => {
 
 router.get("/getcustomers", async (req, res) => {
   const numUsers = 500;
-  const url = `https://randomuser.me/api/?results=30`;
+  const url = `https://randomuser.me/api/?results=${numUsers}`;
   try {
     const response = await axios.get(url);
     const data = response.data;
-    console.log(data);
+    //console.log(data);
     res.status(200).json({ statusCode: 200, message: "OK", data: data });
   } catch (error) {
     console.error(error);
