@@ -1,0 +1,105 @@
+# Ignore build and publish artifacts
+bin/
+obj/
+out/
+dist/
+wwwroot/dist/
+
+# User-specific files
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# ASP.NET Core secrets
+appsettings.Development.json
+secrets.json
+
+# Logs and debugging
+logs/
+*.log
+*.tlog
+*.dmp
+
+# Rider & JetBrains-related files
+*.DotSettings.user
+**/.idea/
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+**/.idea/gradle.xml
+**/.idea/dictionaries
+**/.idea/libraries
+
+# Node.js dependencies (if using npm in Blazor)
+node_modules/
+npm-debug.log
+yarn.lock
+pnpm-lock.yaml
+
+# Package manager directories
+packages/
+.nuget/
+.npm/
+.bower/
+
+# Visual Studio-specific files
+*.vs/
+.vs/
+*.vscode/
+
+# Compiled DLLs & EXEs
+*.dll
+*.exe
+*.pdb
+*.mdb
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# IDE build configurations
+obj/
+project.lock.json
+project.assets.json
+
+# Database files
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# Rider-specific
+.idea/
+*.sln.iml
+
+# JetBrains Rider Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Resharper files
+# Resharper files
+_ReSharper.Caches/
+
+# macOS files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+desktop.ini
+
+# Ignore Bootstrap and other library files
+wwwroot/lib/
+wwwroot/css/bootstrap.*
+wwwroot/js/bootstrap.*
+wwwroot/css/open-iconic/
+wwwroot/css/site.css
+wwwroot/css/site.min.css
+wwwroot/js/site.js
+wwwroot/js/site.min.js

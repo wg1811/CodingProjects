@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    string admin = ViewData["Admin"] as string ?? string.Empty;
+    string user = ViewData["User"] as string ?? string.Empty;
+    string role = ViewData["Role"] as string ?? string.Empty;
+    string email = ViewData["Email"] as string ?? string.Empty;
+    int age = ViewData["Age"] != null ? Convert.ToInt32(ViewData["Age"]) : 0;
+  
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>@admin, hey there!</p>
+    <p>@user is your user.</p>
+    <p>@role is their role</p>
+    <p>@email is their email</p>
+    <p>@age is their age</p>
+</div>
