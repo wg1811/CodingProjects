@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data Warehouse Sales</title>
-    <link rel="stylesheet" href="./styles/common.css" />
+    <link rel="stylesheet" href="/styles/common.css" />
   </head>
   <body>
     <div id="navbar">
       <ul>
         <li><a href="./">Home</a></li>
-        <li><a href="./customers">Customers</a></li>
-        <li><a href="./products">Products</a></li>
+        <li><a href="/customers">Customers</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/sales">Sales</a></li>
       </ul>
     </div>
     <h1>Sales</h1>
@@ -19,6 +20,7 @@
       <button id="get-sales-btn" onclick="populateSalesTable()">
         Get Sales
       </button>
+      <button id="save-sales-btn" onclick="saveSales()">Save Sales</button>
     </div>
     <div id="sales-table-section">
       <table id="sales-table">
@@ -36,6 +38,7 @@
         </tbody>
       </table>
     </div>
-    <script src="./scripts/salesTable.js"></script>
+    <script src="/scripts/salesTable.js"></script>
+    <script src="/scripts/saveSales.js"></script>
   </body>
 </html>

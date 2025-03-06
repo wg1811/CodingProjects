@@ -7,12 +7,13 @@ async function populateSalesTable() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    console.log(response);
+    // console.log(response);
     const data = await response.json();
+    // console.log("this is the data: ::::::::::::", data);
     const table = document.getElementById("sales-table-body");
     table.innerHTML = "";
     let row = "";
-    data.forEach((transaction) => {
+    data.data.forEach((transaction) => {
       row += `
       <tr>
         <td>${transaction.id}</td>

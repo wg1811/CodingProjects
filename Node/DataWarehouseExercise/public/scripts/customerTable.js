@@ -1,5 +1,7 @@
+const baseUrl = window.location.origin; // "http://localhost:3000/
+
 async function populateCustomerTable() {
-  const url = "http://localhost:3000/customers/getcustomers";
+  const url = `${baseUrl}/customers/getcustomers`;
   try {
     const response = await fetch(url);
     if (!response.ok) {

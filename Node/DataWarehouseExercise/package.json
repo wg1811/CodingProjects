@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nade app",
+    "dev": "nodemon app.js --watch app --watch routes --watch views -- watch public"
   },
   "keywords": [],
   "author": "Wesley George",
