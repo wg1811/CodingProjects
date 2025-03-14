@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINGProj1App", "LINGProj1App\LINGProj1App.csproj", "{186C85EC-2DE8-486C-A659-7A9D2B9F2C17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQProj1aApp", "LINQProj1aApp\LINQProj1aApp.csproj", "{96B12647-C874-4573-AFA0-FCA58F854D90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySQLThingy", "MySQLThingy\MySQLThingy.csproj", "{F1EFB7AC-31BA-485C-8D38-2AD806EB71ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{186C85EC-2DE8-486C-A659-7A9D2B9F2C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{186C85EC-2DE8-486C-A659-7A9D2B9F2C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{186C85EC-2DE8-486C-A659-7A9D2B9F2C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{186C85EC-2DE8-486C-A659-7A9D2B9F2C17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96B12647-C874-4573-AFA0-FCA58F854D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96B12647-C874-4573-AFA0-FCA58F854D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96B12647-C874-4573-AFA0-FCA58F854D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96B12647-C874-4573-AFA0-FCA58F854D90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1EFB7AC-31BA-485C-8D38-2AD806EB71ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1EFB7AC-31BA-485C-8D38-2AD806EB71ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1EFB7AC-31BA-485C-8D38-2AD806EB71ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1EFB7AC-31BA-485C-8D38-2AD806EB71ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

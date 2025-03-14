@@ -1,0 +1,50 @@
+# .NET build and system files
+bin/
+obj/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+/.vs/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# ASP.NET environment
+appsettings.json
+appsettings.Development.json
+
+# User Secrets (if using `dotnet user-secrets`)
+secrets.json
+
+# Logs and debugging
+logs/
+*.log
+*.tlog
+dump.rdb
+
+# Packages
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Vite build output
+dist/
+.vite/
+.vitepress/cache/
+
+# NPM-related files
+.npm/
+.pnp/
+.pnp.js
+
+# Docker (if using Docker)
+docker-compose.override.yml
+.dockerignore
+
+# Dependency caching
+/.nuget/
+packages/
