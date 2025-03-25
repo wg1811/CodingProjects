@@ -24,14 +24,23 @@ namespace hotel1.Controllers
                 return BadRequest("Hotel name is required.");
             if (request.RoomCount <= 0)
                 return BadRequest("RoomCount must be greater than 0.");
+
             Console.WriteLine($"Hotel '{request.Name}' created with {request.RoomCount} rooms.");
+
             var hotel = new Hotel { Name = request.Name, Rooms = new List<Room>() };
-            int i = request.RoomCount;
-            for (i = 1; i <= request.RoomCount; i++)
+            for (int i = 1; i <= request.RoomCount; i++)
             {
                 hotel.Rooms.Add(new Room { RoomNumber = i, Availability = true });
             }
-
+            Console.WriteLine(
+                $"Fetched hotel: {hotel.Name} (ID: {hotel.Id}) with {hotel.Rooms.Count} rooms"
+            );
+            foreach (var room in hotel.Rooms)
+            {
+                Console.WriteLine(
+                    $"Room ID: {room.Id}, Number: {room.RoomNumber}, Availability: {room.Availability}"
+                );
+            }
             _context.Hotels.Add(hotel);
             await _context.SaveChangesAsync();
 
