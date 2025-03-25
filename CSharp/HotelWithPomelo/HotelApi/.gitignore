@@ -1,0 +1,54 @@
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+**/bin/
+**/obj/
+
+# Entity Framework Migrations (ignored)
+Migrations/
+
+# User-specific files
+*.dbmdl
+*.jfm
+*.rsuser
+*.sln*
+
+# Logs & Debugging
+logs/
+*.log
+Debug/
+dump/
+
+# Dotnet artifacts
+*.pdb
+*.lock.json
+project.lock.json
+artifacts/
+
+# Node dependencies (if using frontend with npm/yarn)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables & secrets
+.env
+appsettings.json
+appsettings.*.json
+
+# IDE & Editor files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# macOS & Linux system files
+.DS_Store
+._*
+Thumbs.db

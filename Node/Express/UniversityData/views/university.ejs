@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Rankings Dashboard</title>
+    <!-- Using CDN for Chart.js - easier than managing local files -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <h1>University Rankings Analysis</h1>
+      <button class="button-7" role="button" onclick="getAllDataTest()">
+        Get Data Test
+      </button>
+
+      <div class="filters">
+        <select id="yearFilter">
+          <option value="all">All Years</option>
+          <!-- Will be populated with available years -->
+        </select>
+        <select id="countryFilter">
+          <option value="all">All Countries</option>
+          <!-- Will be populated with available years -->
+        </select>
+        <select id="metricSelect">
+          <option value="score">Overall Score</option>
+          <option value="quality_of_education">Quality of Education</option>
+          <option value="quality_of_faculty">Quality of Faculty</option>
+          <option value="publications">Publications</option>
+          <option value="influence">Influence</option>
+          <option value="citations">Citations</option>
+          <option value="patents">Patents</option>
+        </select>
+        <select id="countLimit">
+          <option value="10">Top 10</option>
+          <option value="20">Top 20</option>
+          <option value="50">Top 50</option>
+        </select>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="rankingChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="countryDistributionChart"></canvas>
+      </div>
+    </div>
+
+    <script src="/javascripts/scripts.js"></script>
+  </body>
+</html>

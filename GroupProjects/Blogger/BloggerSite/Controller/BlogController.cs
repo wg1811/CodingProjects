@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,8 +26,16 @@ public class BlogController : ControllerBase
     }
 
     [HttpPost("addblog")]
+    [Authorize]
     public async Task<ActionResult<Blog>> AddBlog([FromBody] Blog blog)
     {
+        var userRoleFromToken = User.FindFirst(ClaimTypes.Role)?.Value;
+        //  Allow only Admins (0) and Writers (1) to create blogs
+        if (userRoleFromToken != "Admin" && userRoleFromToken != "Writer")
+        {
+            return StatusCode(403, new { Message = "Only Admins or Writers can create blogs" });
+        }
+
         await _context.Blogs.AddAsync(blog);
         await _context.SaveChangesAsync();
         return Ok(new { Message = "blog added" });
@@ -33,12 +43,19 @@ public class BlogController : ControllerBase
 
     // update
     [HttpPut("updateblog/{id}")]
+    [Authorize(Roles = "Writer")]
     public async Task<ActionResult> UpdateBlog(int id, [FromBody] Blog updatedBlog)
     {
         var existingBlog = await _context.Blogs.FindAsync(id);
         if (existingBlog == null)
         {
             return NotFound(new { Message = $"Blog with id {id} not found" });
+        }
+        var userIdFromToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+        // Check if the logged-in user is the author of the blog
+        if (existingBlog.AuthorId != userIdFromToken)
+        {
+            return StatusCode(403, new { Message = "You can only update your own blog." });
         }
 
         // ✅ Update only provided fields (keep others unchanged)
@@ -51,12 +68,23 @@ public class BlogController : ControllerBase
 
     //delete
     [HttpDelete("deleteblog/{id}")]
+    [Authorize(Roles = "Admin,Writer")]
     public async Task<ActionResult> DeleteBlog(int id)
     {
         var existingBlog = await _context.Blogs.FindAsync(id);
         if (existingBlog == null)
         {
             return NotFound(new { Message = $"Blog with id {id} not found" });
+        }
+
+        // Get the logged-in user ID and role from the token
+        var userIdFromToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+        var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+
+        // Admins can delete any blog, Writers can only delete their own
+        if (userRole != "Admin" && existingBlog.AuthorId != userIdFromToken)
+        {
+            return StatusCode(403, new { Message = "You can only delete your own blog." });
         }
 
         _context.Blogs.Remove(existingBlog);

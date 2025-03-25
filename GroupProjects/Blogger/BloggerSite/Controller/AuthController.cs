@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 //security claims
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,13 +34,22 @@ public class AuthController : ControllerBase
     {
         var user = await _context.Users
         //This line checks if a user exists in the database with the provided email and password.
-        .FirstOrDefaultAsync(u => u.Email == request.Email && u.Password == request.Password);
+        .FirstOrDefaultAsync(u => u.Email == request.Email);
 
         //check user
         if (user == null)
             return Unauthorized(new { Message = "Invalid email or password", Error = 401 });
-        //if user exists
-        //create  a token
+
+        //VERIFY THE HASHED PASSWORD
+        var passwordHasher = new PasswordHasher<User>();
+
+        //result
+        var result = passwordHasher.VerifyHashedPassword(user, user.Password, request.Password);
+        //if fails
+        if (result == PasswordVerificationResult.Failed)
+            return Unauthorized(new { Message = "Invalid email or password", Error = 401 });
+
+        //if user exists create  a token
         //create instance of GenerateJWTTOken
         // calls the GenerateJwtToken(user) method to generate a JWT token for the authenticated user.
         var token = GenerateJwtToken(user);

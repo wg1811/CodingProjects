@@ -48,3 +48,6 @@ docker-compose.override.yml
 # Dependency caching
 /.nuget/
 packages/
+
+#migration
+migration/

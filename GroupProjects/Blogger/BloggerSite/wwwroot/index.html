@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>HOME PAGE</h1>
+    <div id="login-container">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" />
+
+      <label for="password">Password</label>
+      <input type="text" name="password" id="password" />
+      <button type="button" id="loginbutton" onclick="login()">LOGIN</button>
+      <!--get users-->
+      <button type="button" id="getuserbutton" onclick="getUsers()">
+        GET USER
+      </button>
+      <!--log out-->
+      <button type="button" id="logoutbutton" onclick="logout()">
+        LOG OUT
+      </button>
+    </div>
+
+    <script>
+      async function login() {
+        try {
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          document.getElementById("email").value = "";
+          document.getElementById("password").value = "";
+          const response = await fetch("http://localhost:5026/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: email, password: password }),
+          });
+          const data = await response.json();
+          console.log(data);
+          //insert token to localstorage
+          localStorage.setItem("jwtToken", data.token);
+
+          alert("token is inserted");
+        } catch (error) {
+          console.error("error", error);
+        }
+      }
+
+      async function getUsers() {
+        try {
+          const token = localStorage.getItem("jwtToken"); // Retrieve token
+          if (!token) {
+            alert("Unauthorized! Please log in first.");
+            return;
+          }
+
+          const response = await fetch("http://localhost:5026/users/allusers", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // ✅ Attach JWT token
+            },
+          });
+
+          if (!response.ok) {
+            // ✅ If response is 403, handle it properly
+            if (response.status === 403) {
+              alert("You do not have permission to access user data.");
+              return;
+            } else {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+          }
+
+          const data = await response.json();
+          console.log(data); // ✅ Display fetched user data
+        } catch (error) {
+          console.log("error", error);
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem("jwtToken");
+        alert("logged out");
+      }
+    </script>
+  </body>
+</html>

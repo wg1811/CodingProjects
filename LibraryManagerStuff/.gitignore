@@ -1,0 +1,78 @@
+# .NET Core / ASP.NET Core
+[Bb]in/
+[Oo]bj/
+*.csproj.user
+*.sln.docstates
+*.user
+*.suo
+*.cache
+*.pdb
+*.dll
+*.exe
+*.nupkg
+*.snupkg
+*.tlog
+*.log
+*.trx
+*.xml
+packages/
+artifacts/
+publish/
+*.pubxml
+*.publishproj
+
+# Build and test artifacts
+build/
+testresults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Environment and secrets
+appsettings.*.json
+wwwroot/**/*.min.*
+.env
+*.env.*
+secrets.json
+*.key
+*.pem
+*.cer
+
+# IDEs and editors
+.idea/
+*.iml
+.vscode/
+*.vs/
+*.code-workspace
+*.sublime-*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Diagnostics
+*.dmp
+*.mdmp
+
+# Local test files
+TestResult.xml
+
+#migration
+migrations/
