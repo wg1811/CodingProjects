@@ -1,0 +1,67 @@
+# Build artifacts
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.vs
+*.vscode/
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs and temporary files
+*.log
+logs/
+temp/
+*.tmp
+*.bak
+*.swp
+*.swo
+.DS_Store
+
+# Rider and JetBrains
+.idea/
+*.iml
+
+# Visual Studio and VS Code settings
+.vscode/
+*.code-workspace
+
+# Dependency and package files
+node_modules/
+packages/
+dist/
+bower_components/
+
+# Compiled files
+*.dll
+*.exe
+*.pdb
+*.cache
+*.class
+*.pyc
+*.jar
+
+# Ignore coverage reports
+coverage/
+*.cov
+*.lcov
+
+# Ignore published files (optional)
+publish/
+wwwroot/
+
+# Keep styles.css but ignore other CSS-generated files
+wwwroot/css/*
+!wwwroot/css/styles.css
+
+# Ignore secrets and credentials
+secrets.json
+appsettings.Development.json
+appsettings.Local.json
+.env
+.env.local
+.env.development
