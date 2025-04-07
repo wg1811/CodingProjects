@@ -1,0 +1,55 @@
+# Node.js (for FindPerfectNode and Gateway)
+node_modules/
+npm-debug.log
+yarn-error.log
+*.log
+dist/
+build/
+
+# C# .NET (for CreateRandomNumber)
+# Binaries and build output
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.suo
+*.user
+*.sln.docstates
+
+# Visual Studio / Rider / .NET Core
+.vs/
+.vscode/
+.idea/
+*.csproj.user
+*.dotSettings.user
+*.ncrunchproject
+TestResults/
+*.trx
+*.xml
+
+# .NET Core specific
+*.deps.json
+*.runtimeconfig.json
+*.runtimeconfig.dev.json
+appsettings.Development.json
+
+# Dependency directories (if using local NuGet packages)
+packages/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Editor temp files
+*~
+*.swp
+*.swo
+
+# Miscellaneous
+*.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
